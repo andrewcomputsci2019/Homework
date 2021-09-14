@@ -3,3 +3,14 @@
 /DS-Clue/.gradle/
 /DS-Clue/gradlew
 /DS-Clue/gradlew.bat
+*.jar
+*.war
+*.nar
+*.ear
+*.zip
+*.tar.gz
+*.rar
+/DS-Polynomial/.gitignore
+/DS-Polynomial/gradlew.bat
+/DS-Polynomial/.gradle
+/DS-Polynomial/gradle
