@@ -57,16 +57,17 @@ public class EfficientClue {
     }
 
     public static void main(String[] args) {
-        EfficientClue efficentClue = new EfficientClue();
+        EfficientClue efficientClue = new EfficientClue();
         Scanner scanner = new Scanner(System.in);
         System.out.print("enter 1 for set 1, 2 for set 2, 3 for random");
         int set  = scanner.nextInt();
-        Theory theory = efficentClue.getSolution(set);
-        if (efficentClue.getGuessCount()<=20){
+        scanner.close();
+        Theory theory = efficientClue.getSolution(set);
+        if (efficientClue.getGuessCount()<=20){
             System.out.println("took less than 20 times");
             System.out.println(theory);
         }else{
-            System.out.println("failed to find correct answer in 20 guess");
+            System.out.println("failed to find correct answer in 20 guesses");
         }
     }
 
