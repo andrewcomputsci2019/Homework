@@ -25,7 +25,7 @@ public class EfficientClue {
      * @return the correct theory
      */
     private Theory findSolution(AssistantJack jack){
-        while (lookUp[2]<=6 && lookUp[1]<=10 && lookUp[0]<=20){
+        while (lookUp[2]<=6 && lookUp[1]<=10 && lookUp[0]<=6){
             int test = jack.checkAnswer(lookUp[0],lookUp[1],lookUp[2]);
             if (test==0){
                 break;
