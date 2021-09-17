@@ -1,4 +1,4 @@
-import edu.miracosta.cs113.EfficentClue;
+import edu.miracosta.cs113.EfficientClue;
 import model.AssistantJack;
 import static org.junit.Assert.*;
 
@@ -8,7 +8,7 @@ import org.junit.Test;
 import java.lang.reflect.Field;
 
 public class TheoryTest {
-    private final EfficentClue clue = new EfficentClue();
+    private final EfficientClue clue = new EfficientClue();
     @Test
     public void testSet1(){
         AssistantJack jack = new AssistantJack(1);

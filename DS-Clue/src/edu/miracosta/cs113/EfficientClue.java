@@ -3,15 +3,19 @@ package edu.miracosta.cs113;
 import model.AssistantJack;
 import model.Theory;
 
-import java.util.Arrays;
 import java.util.Scanner;
 
-public class EfficentClue {
+/**
+ * An algo implementation designed to have a max run time of O(20)
+ * space complexity of o(1)
+ * test can be find in file test/TheoryTest
+ */
+public class EfficientClue {
 
     private int[] lookUp  = {1,1,1}; // weapon location person
     private int guessCount =0;
 
-    public EfficentClue(){
+    public EfficientClue(){
 
     }
 
@@ -53,7 +57,7 @@ public class EfficentClue {
     }
 
     public static void main(String[] args) {
-        EfficentClue efficentClue = new EfficentClue();
+        EfficientClue efficentClue = new EfficientClue();
         Scanner scanner = new Scanner(System.in);
         System.out.print("enter 1 for set 1, 2 for set 2, 3 for random");
         int set  = scanner.nextInt();
