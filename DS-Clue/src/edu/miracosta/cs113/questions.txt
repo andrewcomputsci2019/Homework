@@ -1,0 +1,18 @@
+1) Random
+    After running the random driver over 20 times zero times has it been less than 20 guesses.
+    and changing test cases does not improve the runtime since every guess is independent giving each guess a 1/360 chance of being right. Meaning that this algorithm
+    can run infinity although really unlikely
+
+2) Random
+    this algorithm is awful in theory since it can run infinitely long, and it does not remove incorrect values/combinations.
+    If this algorithm removes values as it guesses it could be much more effective at guessing the right value.
+
+1) EfficientClue implementation
+    This algorithm is always equal to or below 20 guesses. It does change on the test case given the closer one of values it to 1 the better as it can check that number
+    early on and stop incrementing it. for example test 1 is only 1 guess while test 2 is 20 guesses required. That is the only downside of this algorithm the farther the values
+    are from 1 the longer it takes to find the correct solution
+
+2) EfficientClue implementation
+    The good thing about this algorithm is that the max amount of passes is (w+p+l-2) or in this case 20
+    Another good thing about this algorithm is the fact it uses a look-up table instead of branching to figure out what value needs to be incremented improving run time
+
