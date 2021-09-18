@@ -6,14 +6,14 @@ import model.Theory;
 import java.util.Scanner;
 
 /**
- * An algo implementation designed to have a max run time of O(20)
+ * An algo implementation designed to have a max run time of O(w+l+p-2)
  * space complexity of o(1)
  * test can be find in file test/TheoryTest
  */
 public class EfficientClue {
 
     private int[] lookUp  = {1,1,1}; // weapon location person
-    private int guessCount =0;
+    private int guessCount =0; //used in main driver
 
     public EfficientClue(){
 
