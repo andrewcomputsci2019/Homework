@@ -59,7 +59,7 @@ public class Term implements Cloneable{
     }
     public int compareTo(Term term){
         if (term!=null) {
-            return this.coefficient - term.coefficient;
+            return this.exponent - term.exponent;
         }else{
             return -1;
         }
