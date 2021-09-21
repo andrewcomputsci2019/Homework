@@ -1,6 +1,5 @@
 package code;
 
-import java.util.Objects;
 
 public class Term implements Cloneable{
     private int coefficient;
@@ -51,7 +50,7 @@ public class Term implements Cloneable{
             String copy = term.replace(" ","");
             this.coefficient = Integer.parseInt(copy);
             this.exponent = 0;
-            /*if (!checkForExponet(copy)){ // I do not think that non x values terms are given exponents
+            /*if (!checkForExponent(copy)){ // I do not think that non x values terms are given exponents
                 this.coefficient = Integer.parseInt(copy);
                 this.exponent =0;
             }else{
@@ -161,18 +160,15 @@ public class Term implements Cloneable{
                 return ""+this.coefficient+"x";
             }
         }
-        if (coefficient>0){
-            if (exponent==0){
-                return "+"+this.coefficient;
-            }
-            if (exponent!=1){
-                return "+"+this.coefficient+"x^"+this.exponent;
-            }
-            else{
-                return "+"+this.coefficient+"x";
-            }
+        if (exponent==0){
+            return "+"+this.coefficient;
+        }
+        if (exponent!=1){
+            return "+"+this.coefficient+"x^"+this.exponent;
+        }
+        else{
+            return "+"+this.coefficient+"x";
         }
         /*return (this.coefficient>0?"+":"")+this.coefficient+(this.exponent!=0?"x^"+this.exponent:"");*/
-        return "";
     }
 }
