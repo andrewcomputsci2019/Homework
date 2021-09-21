@@ -15,7 +15,8 @@
  *
  * @author  Nery Chapeton-Lamas <nchapetonLamas@miracosta.edu>
  * @version 1.0
- */
+ *//*
+
 
 package edu.miracosta.cs113;
 
@@ -299,10 +300,12 @@ public class PolynomialTest {
         }
     }
 
-    /** TODO only allowed to change this file for EXTRA CREDIT
+    */
+/** TODO only allowed to change this file for EXTRA CREDIT
      * add tests for:
      * - duplicate add terms by string (not Term objects),
      * - duplicate toString() tests
      * - anything else you can think of testing!
-     */
-}
+     *//*
+
+}*/
