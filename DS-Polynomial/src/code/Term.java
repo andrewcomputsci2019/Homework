@@ -12,6 +12,7 @@ public class Term implements Cloneable{
         this.coefficient = coefficient;
         this.exponent = exponent;
     }
+    //@TODO finish String Constructor currently not working
     public Term(String term){
         // set vars in here by extracting from string
 
