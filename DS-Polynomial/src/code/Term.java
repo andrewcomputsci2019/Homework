@@ -1,5 +1,7 @@
 package code;
 
+import java.util.Objects;
+
 public class Term implements Cloneable{
     private int coefficient;
     private int exponent;
@@ -12,10 +14,61 @@ public class Term implements Cloneable{
         this.coefficient = coefficient;
         this.exponent = exponent;
     }
-    //@TODO finish String Constructor currently not working
     public Term(String term){
         // set vars in here by extracting from string
-
+       /* if (term==null||term.equals("")){ //used to check if value given is null or empty
+            coefficient=0;
+            exponent=0;
+            return;
+        }*/
+        if (checkForX(term)){
+            String[] termArray = term.split("x");
+            if(termArray.length<=1){
+                if (termArray[0].equals("+")){
+                    this.coefficient =1;
+                }
+                else if (termArray[0].equals("-")){
+                    this.coefficient = -1;
+                }
+                else{
+                    this.coefficient = Integer.parseInt(termArray[0]);
+                }
+                this.exponent = 1;
+            }else{
+                if(checkLength(termArray[0].length())){
+                    this.coefficient = Integer.parseInt(termArray[0]);
+                }else{
+                    if (termArray[0].equals("+")){
+                        this.coefficient = 1;
+                    }else{
+                        this.coefficient=-1;
+                    }
+                }
+                this.exponent = Integer.parseInt(termArray[1].replaceAll("\\^",""));
+            }
+        }
+        else{//lin search for pieces
+            String copy = term.replace(" ","");
+            this.coefficient = Integer.parseInt(copy);
+            this.exponent = 0;
+            /*if (!checkForExponet(copy)){ // I do not think that non x values terms are given exponents
+                this.coefficient = Integer.parseInt(copy);
+                this.exponent =0;
+            }else{
+                String[] innerCopy = copy.split("\\^");
+                this.coefficient = Integer.parseInt(innerCopy[0]);
+                this.exponent = Integer.parseInt(innerCopy[1]);
+            }*/
+        }
+    }
+    private static boolean checkForExponet(String term){
+        return term.contains("^");
+    }
+    private static boolean checkLength(int len){
+        return len>1;
+    }
+    private static boolean checkForX(String term){
+        return term.contains("x");
     }
     public Term(Term term){
         this.coefficient = term.coefficient;
