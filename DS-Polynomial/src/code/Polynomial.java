@@ -16,18 +16,44 @@ public class Polynomial {
         }
     }
 
-    //@TODO see comment at bottom
     public void addTerm(Term term){
-        terms.add(term);
+        if (terms.size()==0){
+            terms.add(term);
+            return;
+        }
+        int counter = 0;
+        for(;counter<terms.size()&&terms.get(counter).compareTo(term)>0;counter++){ // empty loop to iterate to desired index
+        }
+        if (terms.get((counter= counter>=terms.size()?counter-1:counter)).compareTo(term)==0){ //counter needs to be checked just in case it is out of bounds
+            addMutateCoefficient(terms.get(counter),term);
+        }else if (terms.get(counter).compareTo(term)<0){ // if term is larger than the last
+            terms.add(counter,term);
+        }
+        else{
+            terms.add(term);
+        }
+
     }
+
     public int getNumTerms(){
         return terms.size();
     }
+
     public Term getTerm(int index){
         return terms.get(index);
     }
+
     public void clear(){
         terms.clear();
+    }
+
+    /**
+     *
+     * @param first this is the Term to be mutated, Coefficient changes
+     * @param second this object is not mutated and is only used to get its Coefficient
+     */
+    private void addMutateCoefficient(Term first, Term second){
+        first.setCoefficient(first.getCoefficient()+second.getCoefficient());
     }
     //@TODO see comment at bottom
     public Polynomial add(Polynomial other){
@@ -47,5 +73,4 @@ public class Polynomial {
         return builder.toString().replaceAll("[|]","");
     }
 }
-// @TODO terms sorted when enter and combine like terms when entered
-// @TODO make the add method so two polynomials can be added together
+// @TODO make the add method so two polynomials can be added together should mutate the current polynomials list, IE merge the two together
