@@ -1,5 +1,7 @@
 package code;
 
+import java.util.Arrays;
+import java.util.Iterator;
 import java.util.LinkedList;
 
 public class Polynomial {
@@ -10,12 +12,21 @@ public class Polynomial {
         terms = new LinkedList<>();
     }
     public Polynomial(Polynomial original){
-        terms = new LinkedList<>();
-        for(Term term:original.terms){
-            terms.add(term.clone());
+        this(original.terms);
+    }
+    public Polynomial(String polynomial){
+        this();
+    }
+    private Polynomial(LinkedList<Term> list){
+        this.terms = new LinkedList<>();
+        addAll(list);
+
+    }
+    private void addAll(Iterable<Term> terms){
+        for (Term term:terms) {
+            addTermClone(term);
         }
     }
-
     public void addTerm(Term term){
         if (terms.size()==0){
             terms.add(term);
@@ -26,6 +37,9 @@ public class Polynomial {
         }
         if (terms.get((counter= counter>=terms.size()?counter-1:counter)).compareTo(term)==0){ //counter needs to be checked just in case it is out of bounds
             addMutateCoefficient(terms.get(counter),term);
+            if (terms.get(counter).getCoefficient()==0){
+                terms.remove(counter);
+            }
         }else if (terms.get(counter).compareTo(term)<0){ // if term is larger than the last
             terms.add(counter,term);
         }
@@ -34,7 +48,26 @@ public class Polynomial {
         }
 
     }
-
+    private void addTermClone(Term term){
+        if (terms.size()==0){
+            terms.add(term.clone());
+            return;
+        }
+        int counter = 0;
+        for(;counter<terms.size()&&terms.get(counter).compareTo(term)>0;counter++){ // empty loop to iterate to desired index
+        }
+        if (terms.get((counter= counter>=terms.size()?counter-1:counter)).compareTo(term)==0){ //counter needs to be checked just in case it is out of bounds
+            addMutateCoefficient(terms.get(counter),term);
+            if (terms.get(counter).getCoefficient()==0){
+                terms.remove(counter);
+            }
+        }else if (terms.get(counter).compareTo(term)<0){ // if term is larger than the last
+            terms.add(counter,term.clone());
+        }
+        else{
+            terms.add(term.clone());
+        }
+    }
     public int getNumTerms(){
         return terms.size();
     }
@@ -56,8 +89,45 @@ public class Polynomial {
         first.setCoefficient(first.getCoefficient()+second.getCoefficient());
     }
     //@TODO see comment at bottom
-    public Polynomial add(Polynomial other){
-        return null;
+    public void add(Polynomial other){
+    /*    Iterator<Term> termsIter = terms.iterator();// faster but takes up O(N) space, O(n) merge
+        Iterator<Term> otherIter = other.terms.iterator();
+        Term first = null;
+        Term second = null;
+        LinkedList<Term> temp = new LinkedList<>();
+        while (termsIter.hasNext()&& otherIter.hasNext()){
+            first = first==null? otherIter.next() : first;
+            second = second==null?termsIter.next(): second;
+            if (first.compareTo(second)>0){
+                temp.add(first.clone());
+                first=null;
+            }else if (first.compareTo(second)==0){
+                addMutateCoefficient(second,first);
+                if (second.getCoefficient() != 0) {
+                    temp.add(second);
+                }
+                second=null;
+                first=null;
+            }else{
+                temp.add(second);
+                second=null;
+            }
+        }
+        if (second!=null){
+            temp.add(second);
+        }
+        if (first!=null){
+            temp.add(first);
+        }
+        termsIter.forEachRemaining(temp::add);
+        termsIter.forEachRemaining(obj-> temp.add(obj.clone()));
+        this.terms = temp;*/
+        other.terms.iterator().forEachRemaining(this::addTermClone); // worst case O(N^2) time complexity but O(1) space
+    }
+    public Polynomial addNew(Polynomial other){
+       Polynomial newPoly = new Polynomial(this.terms);
+       other.terms.iterator().forEachRemaining(newPoly::addTermClone);
+       return newPoly;
     }
 
     @Override
