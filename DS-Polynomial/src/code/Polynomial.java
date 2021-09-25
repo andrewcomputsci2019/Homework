@@ -3,6 +3,7 @@ package code;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.Stack;
 
 public class Polynomial {
 
@@ -16,6 +17,7 @@ public class Polynomial {
     }
     public Polynomial(String polynomial){
         this();
+        breakDownString(polynomial);
     }
     private Polynomial(LinkedList<Term> list){
         this.terms = new LinkedList<>();
@@ -129,7 +131,27 @@ public class Polynomial {
        other.terms.iterator().forEachRemaining(newPoly::addTermClone);
        return newPoly;
     }
-
+    private void breakDownString(String polynomial){
+        String noSpace = polynomial.replaceAll(" ","");
+        for(int i=0,j=1;j<noSpace.length();j++){ // iterate through and make terms out of the string
+            char temp;
+            if(((temp=noSpace.charAt(j))=='+'||temp=='-')&&noSpace.charAt(j-1)!='^'){
+                String termString = noSpace.substring(i,j);
+                if ((temp=termString.charAt(0))!='+'&&temp!='-'){
+                    termString = "+"+termString;
+                }
+                addTerm(new Term(termString));
+                i=j;
+            }else if (j+1==noSpace.length()){
+                String termString = noSpace.substring(i,j+1);
+                if ((temp=termString.charAt(0))!='+'&&temp!='-'){
+                    termString = "+"+termString;
+                }
+               addTerm(new Term(termString));
+                break;
+            }
+        }
+    }
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder();
@@ -138,9 +160,9 @@ public class Polynomial {
         }
         int counter = 0;
         for (Term term: terms){
-            builder.append(counter++==0?term.toString().substring(1):term.toString());
+            builder.append(counter++==0&&term.getCoefficient()>0?term.toString().substring(1):term.toString());
         }
         return builder.toString().replaceAll("[|]","");
     }
 }
-// @TODO make the add method so two polynomials can be added together should mutate the current polynomials list, IE merge the two together
+// @TODO make a string constructor for polynomial

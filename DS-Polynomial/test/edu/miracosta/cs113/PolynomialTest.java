@@ -1,6 +1,9 @@
 package edu.miracosta.cs113;
 import org.junit.Test;
 import code.*;
+
+import java.util.LinkedList;
+
 import static org.junit.Assert.*;
 /**
  * Polynomial.java : JUnit test for Polynomial ADT implementation.
@@ -294,6 +297,16 @@ public class PolynomialTest {
 
             assertTrue("Shallow copy of Term object in Polynomial", originalTerm != copyTerm);
 
+        }
+    }
+    @Test
+    public void testStringConstructor(){
+        LinkedList<Polynomial> polynomials = new LinkedList<>();
+        for (String poly: DUPLICATE_POLY){
+            polynomials.add(new Polynomial(poly));
+        }
+        for(int i=0; i<DUPLICATE_POLY.length; i++){
+            assertEquals(DUPLICATE_POLY[i].replaceAll(" ",""),polynomials.get(i).toString());
         }
     }
 
