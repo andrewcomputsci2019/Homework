@@ -66,7 +66,7 @@ public class Driver {
                 "Some functions offer flags that can be used to shortcut steps or change the functions behavior, functions that offer this are replacePolynomial,addToPolynomial,removePolynomial\n" +
                 "replacePolynomial allows you to specify the index before hand by using 1 --index example is 1 --1 \n" +
                 "This will prompt you to type in the new polynomial to replace the one in index one\n" +
-                "If not supplied an argument the program will ask you for an index and then the polynomial" +
+                "If not supplied an argument the program will ask you for an index and then the polynomial\n" +
                 "addToPolynomial offers the ability to specify index of the operation like if you wanted to add index 1 and 3 you could do 2 --1 --3\n" +
                 "this tells addToPolynomial to modify index 1 by adding index 3 to it\n" +
                 "If you do not want to modify the index but want to add a polynomial to it you can use the --noMod or --nomod option to tell the program to not store or change the index of the result\n" +
