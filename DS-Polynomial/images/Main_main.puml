@@ -1,0 +1,702 @@
+@startuml
+participant Actor
+Actor -> Main : main
+activate Main
+Main -> Driver : new
+activate Driver
+Driver --> Main
+deactivate Driver
+Main -> Driver : start
+activate Driver
+Driver -> Driver : createPolynomial
+activate Driver
+Driver -> Driver : verifyString
+activate Driver
+Driver --> Driver
+deactivate Driver
+Driver -> Polynomial : new
+activate Polynomial
+Polynomial -> Polynomial : new
+activate Polynomial
+Polynomial --> Polynomial
+deactivate Polynomial
+Polynomial -> Polynomial : breakDownString
+activate Polynomial
+Polynomial -> Term : new
+activate Term
+Term --> Polynomial
+deactivate Term
+Polynomial -> Polynomial : addTerm
+activate Polynomial
+Polynomial --> Polynomial
+deactivate Polynomial
+Polynomial -> Term : new
+activate Term
+Term --> Polynomial
+deactivate Term
+Polynomial -> Polynomial : addTerm
+activate Polynomial
+Polynomial --> Polynomial
+deactivate Polynomial
+Polynomial --> Polynomial
+deactivate Polynomial
+Polynomial --> Driver
+deactivate Polynomial
+Driver --> Driver
+deactivate Driver
+Driver -> Driver : replacePolynomial
+activate Driver
+Driver -> Driver : verifyString
+activate Driver
+Driver --> Driver
+deactivate Driver
+Driver -> Polynomial : new
+activate Polynomial
+Polynomial -> Polynomial : new
+activate Polynomial
+Polynomial --> Polynomial
+deactivate Polynomial
+Polynomial -> Polynomial : breakDownString
+activate Polynomial
+Polynomial -> Term : new
+activate Term
+Term --> Polynomial
+deactivate Term
+Polynomial -> Polynomial : addTerm
+activate Polynomial
+Polynomial --> Polynomial
+deactivate Polynomial
+Polynomial -> Term : new
+activate Term
+Term --> Polynomial
+deactivate Term
+Polynomial -> Polynomial : addTerm
+activate Polynomial
+Polynomial --> Polynomial
+deactivate Polynomial
+Polynomial --> Polynomial
+deactivate Polynomial
+Polynomial --> Driver
+deactivate Polynomial
+Driver -> Driver : verifyString
+activate Driver
+Driver --> Driver
+deactivate Driver
+Driver -> Polynomial : new
+activate Polynomial
+Polynomial -> Polynomial : new
+activate Polynomial
+Polynomial --> Polynomial
+deactivate Polynomial
+Polynomial -> Polynomial : breakDownString
+activate Polynomial
+Polynomial -> Term : new
+activate Term
+Term --> Polynomial
+deactivate Term
+Polynomial -> Polynomial : addTerm
+activate Polynomial
+Polynomial --> Polynomial
+deactivate Polynomial
+Polynomial -> Term : new
+activate Term
+Term --> Polynomial
+deactivate Term
+Polynomial -> Polynomial : addTerm
+activate Polynomial
+Polynomial --> Polynomial
+deactivate Polynomial
+Polynomial --> Polynomial
+deactivate Polynomial
+Polynomial --> Driver
+deactivate Polynomial
+Driver --> Driver
+deactivate Driver
+Driver -> Driver : addToPolynomial
+activate Driver
+Driver -> Driver : addToNoMod
+activate Driver
+Driver -> Driver : verifyString
+activate Driver
+Driver --> Driver
+deactivate Driver
+Driver -> Polynomial : new
+activate Polynomial
+Polynomial -> Polynomial : new
+activate Polynomial
+Polynomial --> Polynomial
+deactivate Polynomial
+Polynomial -> Polynomial : breakDownString
+activate Polynomial
+Polynomial --> Polynomial
+deactivate Polynomial
+Polynomial --> Driver
+deactivate Polynomial
+Driver -> Polynomial : addNew
+activate Polynomial
+Polynomial -> Polynomial : new
+activate Polynomial
+Polynomial --> Polynomial
+deactivate Polynomial
+Polynomial -> Polynomial : addTermClone
+activate Polynomial
+Polynomial --> Polynomial
+deactivate Polynomial
+Polynomial --> Driver
+deactivate Polynomial
+Driver -> Driver : verifyString
+activate Driver
+Driver --> Driver
+deactivate Driver
+Driver -> Polynomial : new
+activate Polynomial
+Polynomial -> Polynomial : new
+activate Polynomial
+Polynomial --> Polynomial
+deactivate Polynomial
+Polynomial -> Polynomial : breakDownString
+activate Polynomial
+Polynomial --> Polynomial
+deactivate Polynomial
+Polynomial --> Driver
+deactivate Polynomial
+Driver -> Polynomial : new
+activate Polynomial
+Polynomial -> Polynomial : new
+activate Polynomial
+Polynomial --> Polynomial
+deactivate Polynomial
+Polynomial -> Polynomial : breakDownString
+activate Polynomial
+Polynomial --> Polynomial
+deactivate Polynomial
+Polynomial --> Driver
+deactivate Polynomial
+Driver -> Polynomial : addNew
+activate Polynomial
+Polynomial -> Polynomial : new
+activate Polynomial
+Polynomial --> Polynomial
+deactivate Polynomial
+Polynomial -> Polynomial : addTermClone
+activate Polynomial
+Polynomial --> Polynomial
+deactivate Polynomial
+Polynomial --> Driver
+deactivate Polynomial
+Driver -> Driver : verifyString
+activate Driver
+Driver --> Driver
+deactivate Driver
+Driver -> Polynomial : new
+activate Polynomial
+Polynomial -> Polynomial : new
+activate Polynomial
+Polynomial --> Polynomial
+deactivate Polynomial
+Polynomial -> Polynomial : breakDownString
+activate Polynomial
+Polynomial --> Polynomial
+deactivate Polynomial
+Polynomial --> Driver
+deactivate Polynomial
+Driver -> Polynomial : addNew
+activate Polynomial
+Polynomial -> Polynomial : new
+activate Polynomial
+Polynomial --> Polynomial
+deactivate Polynomial
+Polynomial -> Polynomial : addTermClone
+activate Polynomial
+Polynomial --> Polynomial
+deactivate Polynomial
+Polynomial --> Driver
+deactivate Polynomial
+Driver -> Polynomial : addNew
+activate Polynomial
+Polynomial -> Polynomial : new
+activate Polynomial
+Polynomial --> Polynomial
+deactivate Polynomial
+Polynomial -> Polynomial : addTermClone
+activate Polynomial
+Polynomial --> Polynomial
+deactivate Polynomial
+Polynomial --> Driver
+deactivate Polynomial
+Driver --> Driver
+deactivate Driver
+Driver -> Driver : addToNoMod
+activate Driver
+Driver -> Driver : verifyString
+activate Driver
+Driver --> Driver
+deactivate Driver
+Driver -> Polynomial : new
+activate Polynomial
+Polynomial -> Polynomial : new
+activate Polynomial
+Polynomial --> Polynomial
+deactivate Polynomial
+Polynomial -> Polynomial : breakDownString
+activate Polynomial
+Polynomial --> Polynomial
+deactivate Polynomial
+Polynomial --> Driver
+deactivate Polynomial
+Driver -> Polynomial : addNew
+activate Polynomial
+Polynomial -> Polynomial : new
+activate Polynomial
+Polynomial --> Polynomial
+deactivate Polynomial
+Polynomial -> Polynomial : addTermClone
+activate Polynomial
+Polynomial --> Polynomial
+deactivate Polynomial
+Polynomial --> Driver
+deactivate Polynomial
+Driver -> Driver : verifyString
+activate Driver
+Driver --> Driver
+deactivate Driver
+Driver -> Polynomial : new
+activate Polynomial
+Polynomial -> Polynomial : new
+activate Polynomial
+Polynomial --> Polynomial
+deactivate Polynomial
+Polynomial -> Polynomial : breakDownString
+activate Polynomial
+Polynomial --> Polynomial
+deactivate Polynomial
+Polynomial --> Driver
+deactivate Polynomial
+Driver -> Polynomial : new
+activate Polynomial
+Polynomial -> Polynomial : new
+activate Polynomial
+Polynomial --> Polynomial
+deactivate Polynomial
+Polynomial -> Polynomial : breakDownString
+activate Polynomial
+Polynomial --> Polynomial
+deactivate Polynomial
+Polynomial --> Driver
+deactivate Polynomial
+Driver -> Polynomial : addNew
+activate Polynomial
+Polynomial -> Polynomial : new
+activate Polynomial
+Polynomial --> Polynomial
+deactivate Polynomial
+Polynomial -> Polynomial : addTermClone
+activate Polynomial
+Polynomial --> Polynomial
+deactivate Polynomial
+Polynomial --> Driver
+deactivate Polynomial
+Driver -> Driver : verifyString
+activate Driver
+Driver --> Driver
+deactivate Driver
+Driver -> Polynomial : new
+activate Polynomial
+Polynomial -> Polynomial : new
+activate Polynomial
+Polynomial --> Polynomial
+deactivate Polynomial
+Polynomial -> Polynomial : breakDownString
+activate Polynomial
+Polynomial --> Polynomial
+deactivate Polynomial
+Polynomial --> Driver
+deactivate Polynomial
+Driver -> Polynomial : addNew
+activate Polynomial
+Polynomial -> Polynomial : new
+activate Polynomial
+Polynomial --> Polynomial
+deactivate Polynomial
+Polynomial -> Polynomial : addTermClone
+activate Polynomial
+Polynomial --> Polynomial
+deactivate Polynomial
+Polynomial --> Driver
+deactivate Polynomial
+Driver -> Polynomial : addNew
+activate Polynomial
+Polynomial -> Polynomial : new
+activate Polynomial
+Polynomial --> Polynomial
+deactivate Polynomial
+Polynomial -> Polynomial : addTermClone
+activate Polynomial
+Polynomial --> Polynomial
+deactivate Polynomial
+Polynomial --> Driver
+deactivate Polynomial
+Driver --> Driver
+deactivate Driver
+Driver -> Driver : verifyString
+activate Driver
+Driver --> Driver
+deactivate Driver
+Driver -> Polynomial : new
+activate Polynomial
+Polynomial -> Polynomial : new
+activate Polynomial
+Polynomial --> Polynomial
+deactivate Polynomial
+Polynomial -> Polynomial : breakDownString
+activate Polynomial
+Polynomial -> Term : new
+activate Term
+Term --> Polynomial
+deactivate Term
+Polynomial -> Polynomial : addTerm
+activate Polynomial
+Polynomial --> Polynomial
+deactivate Polynomial
+Polynomial -> Term : new
+activate Term
+Term --> Polynomial
+deactivate Term
+Polynomial -> Polynomial : addTerm
+activate Polynomial
+Polynomial --> Polynomial
+deactivate Polynomial
+Polynomial --> Polynomial
+deactivate Polynomial
+Polynomial --> Driver
+deactivate Polynomial
+Driver -> Polynomial : add
+activate Polynomial
+Polynomial -> Polynomial : addTermClone
+activate Polynomial
+Polynomial -> Term : clone
+activate Term
+Term --> Polynomial
+deactivate Term
+Polynomial -> Term : compareTo
+activate Term
+Term --> Polynomial
+deactivate Term
+Polynomial -> Term : compareTo
+activate Term
+Term --> Polynomial
+deactivate Term
+Polynomial -> Polynomial : addMutateCoefficient
+activate Polynomial
+Polynomial --> Polynomial
+deactivate Polynomial
+Polynomial -> Term : compareTo
+activate Term
+Term --> Polynomial
+deactivate Term
+Polynomial -> Term : clone
+activate Term
+Term --> Polynomial
+deactivate Term
+Polynomial -> Term : clone
+activate Term
+Term --> Polynomial
+deactivate Term
+Polynomial --> Polynomial
+deactivate Polynomial
+Polynomial --> Driver
+deactivate Polynomial
+Driver -> Driver : verifyString
+activate Driver
+Driver --> Driver
+deactivate Driver
+Driver -> Polynomial : new
+activate Polynomial
+Polynomial -> Polynomial : new
+activate Polynomial
+Polynomial --> Polynomial
+deactivate Polynomial
+Polynomial -> Polynomial : breakDownString
+activate Polynomial
+Polynomial -> Term : new
+activate Term
+Term --> Polynomial
+deactivate Term
+Polynomial -> Polynomial : addTerm
+activate Polynomial
+Polynomial --> Polynomial
+deactivate Polynomial
+Polynomial -> Term : new
+activate Term
+Term --> Polynomial
+deactivate Term
+Polynomial -> Polynomial : addTerm
+activate Polynomial
+Polynomial --> Polynomial
+deactivate Polynomial
+Polynomial --> Polynomial
+deactivate Polynomial
+Polynomial --> Driver
+deactivate Polynomial
+Driver -> Polynomial : new
+activate Polynomial
+Polynomial -> Polynomial : new
+activate Polynomial
+Polynomial --> Polynomial
+deactivate Polynomial
+Polynomial -> Polynomial : breakDownString
+activate Polynomial
+Polynomial -> Term : new
+activate Term
+Term --> Polynomial
+deactivate Term
+Polynomial -> Polynomial : addTerm
+activate Polynomial
+Polynomial --> Polynomial
+deactivate Polynomial
+Polynomial -> Term : new
+activate Term
+Term --> Polynomial
+deactivate Term
+Polynomial -> Polynomial : addTerm
+activate Polynomial
+Polynomial --> Polynomial
+deactivate Polynomial
+Polynomial --> Polynomial
+deactivate Polynomial
+Polynomial --> Driver
+deactivate Polynomial
+Driver -> Polynomial : add
+activate Polynomial
+Polynomial -> Polynomial : addTermClone
+activate Polynomial
+Polynomial -> Term : clone
+activate Term
+Term --> Polynomial
+deactivate Term
+Polynomial -> Term : compareTo
+activate Term
+Term --> Polynomial
+deactivate Term
+Polynomial -> Term : compareTo
+activate Term
+Term --> Polynomial
+deactivate Term
+Polynomial -> Polynomial : addMutateCoefficient
+activate Polynomial
+Polynomial --> Polynomial
+deactivate Polynomial
+Polynomial -> Term : compareTo
+activate Term
+Term --> Polynomial
+deactivate Term
+Polynomial -> Term : clone
+activate Term
+Term --> Polynomial
+deactivate Term
+Polynomial -> Term : clone
+activate Term
+Term --> Polynomial
+deactivate Term
+Polynomial --> Polynomial
+deactivate Polynomial
+Polynomial --> Driver
+deactivate Polynomial
+Driver -> Polynomial : new
+activate Polynomial
+Polynomial -> Polynomial : new
+activate Polynomial
+Polynomial -> Polynomial : addAll
+activate Polynomial
+Polynomial --> Polynomial
+deactivate Polynomial
+Polynomial --> Polynomial
+deactivate Polynomial
+Polynomial --> Driver
+deactivate Polynomial
+Driver -> Polynomial : add
+activate Polynomial
+Polynomial -> Polynomial : addTermClone
+activate Polynomial
+Polynomial -> Term : clone
+activate Term
+Term --> Polynomial
+deactivate Term
+Polynomial -> Term : compareTo
+activate Term
+Term --> Polynomial
+deactivate Term
+Polynomial -> Term : compareTo
+activate Term
+Term --> Polynomial
+deactivate Term
+Polynomial -> Polynomial : addMutateCoefficient
+activate Polynomial
+Polynomial --> Polynomial
+deactivate Polynomial
+Polynomial -> Term : compareTo
+activate Term
+Term --> Polynomial
+deactivate Term
+Polynomial -> Term : clone
+activate Term
+Term --> Polynomial
+deactivate Term
+Polynomial -> Term : clone
+activate Term
+Term --> Polynomial
+deactivate Term
+Polynomial --> Polynomial
+deactivate Polynomial
+Polynomial --> Driver
+deactivate Polynomial
+Driver -> Polynomial : toString
+activate Polynomial
+Polynomial -> Term : toString
+activate Term
+Term --> Polynomial
+deactivate Term
+Polynomial -> Term : toString
+activate Term
+Term --> Polynomial
+deactivate Term
+Polynomial --> Driver
+deactivate Polynomial
+Driver -> Driver : verifyString
+activate Driver
+Driver --> Driver
+deactivate Driver
+Driver -> Polynomial : new
+activate Polynomial
+Polynomial -> Polynomial : new
+activate Polynomial
+Polynomial --> Polynomial
+deactivate Polynomial
+Polynomial -> Polynomial : breakDownString
+activate Polynomial
+Polynomial -> Term : new
+activate Term
+Term --> Polynomial
+deactivate Term
+Polynomial -> Polynomial : addTerm
+activate Polynomial
+Polynomial --> Polynomial
+deactivate Polynomial
+Polynomial -> Term : new
+activate Term
+Term --> Polynomial
+deactivate Term
+Polynomial -> Polynomial : addTerm
+activate Polynomial
+Polynomial --> Polynomial
+deactivate Polynomial
+Polynomial --> Polynomial
+deactivate Polynomial
+Polynomial --> Driver
+deactivate Polynomial
+Driver -> Polynomial : add
+activate Polynomial
+Polynomial -> Polynomial : addTermClone
+activate Polynomial
+Polynomial -> Term : clone
+activate Term
+Term --> Polynomial
+deactivate Term
+Polynomial -> Term : compareTo
+activate Term
+Term --> Polynomial
+deactivate Term
+Polynomial -> Term : compareTo
+activate Term
+Term --> Polynomial
+deactivate Term
+Polynomial -> Polynomial : addMutateCoefficient
+activate Polynomial
+Polynomial --> Polynomial
+deactivate Polynomial
+Polynomial -> Term : compareTo
+activate Term
+Term --> Polynomial
+deactivate Term
+Polynomial -> Term : clone
+activate Term
+Term --> Polynomial
+deactivate Term
+Polynomial -> Term : clone
+activate Term
+Term --> Polynomial
+deactivate Term
+Polynomial --> Polynomial
+deactivate Polynomial
+Polynomial --> Driver
+deactivate Polynomial
+Driver -> Polynomial : add
+activate Polynomial
+Polynomial -> Polynomial : addTermClone
+activate Polynomial
+Polynomial -> Term : clone
+activate Term
+Term --> Polynomial
+deactivate Term
+Polynomial -> Term : compareTo
+activate Term
+Term --> Polynomial
+deactivate Term
+Polynomial -> Term : compareTo
+activate Term
+Term --> Polynomial
+deactivate Term
+Polynomial -> Polynomial : addMutateCoefficient
+activate Polynomial
+Polynomial --> Polynomial
+deactivate Polynomial
+Polynomial -> Term : compareTo
+activate Term
+Term --> Polynomial
+deactivate Term
+Polynomial -> Term : clone
+activate Term
+Term --> Polynomial
+deactivate Term
+Polynomial -> Term : clone
+activate Term
+Term --> Polynomial
+deactivate Term
+Polynomial --> Polynomial
+deactivate Polynomial
+Polynomial --> Driver
+deactivate Polynomial
+Driver --> Driver
+deactivate Driver
+Driver -> Driver : removePolynomial
+activate Driver
+Driver --> Driver
+deactivate Driver
+Driver -> Driver : listPolynomials
+activate Driver
+Driver -> Polynomial : toString
+activate Polynomial
+Polynomial -> Term : toString
+activate Term
+Term --> Polynomial
+deactivate Term
+Polynomial -> Term : toString
+activate Term
+Term --> Polynomial
+deactivate Term
+Polynomial --> Driver
+deactivate Polynomial
+Driver --> Driver
+deactivate Driver
+Driver -> Driver : clearScreen
+activate Driver
+Driver --> Driver
+deactivate Driver
+Driver -> Driver : printHelp
+activate Driver
+Driver --> Driver
+deactivate Driver
+Driver --> Main
+deactivate Driver
+return
+@enduml
