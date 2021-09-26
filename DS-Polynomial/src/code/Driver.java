@@ -10,8 +10,8 @@ public class Driver {
     }
     private static final OS os = getOs();
     private static final String prefix = "polynomials adder ";
-    private static final List<String> options = Arrays.asList("create polynomial","add to polynomial","delete polynomial","list polynomials","Clear Screen","HELP");
-    private ArrayList<Polynomial> polynomials;
+    private static final List<String> options = Arrays.asList("create polynomial","replace polynomial","add to polynomial","delete polynomial","list polynomials","Clear Screen","HELP");
+    private final ArrayList<Polynomial> polynomials;
     private final static String helpMessage = getHelpMessage();
     private final Scanner keyboard;
     public Driver(){
@@ -39,7 +39,7 @@ public class Driver {
             String[] args= null;
             if (input.contains("--")){
                 String[] temp = input.split("--");
-                args = new String[Math.min(temp.length - 1, 2)];
+                args = new String[Math.min(temp.length - 1, 3)];
                 for (int i=1; i< temp.length&&i<args.length+1; i++){
                     args[i-1] = temp[i];
                 }
@@ -47,14 +47,15 @@ public class Driver {
             }
             switch (Integer.parseInt(input.replaceAll(" ",""))){
                 case 0:createPolynomial(); break;
-                case 1:addToPolynomial(args); break;
-                case 2:removePolynomial(args); break;
-                case 3:listPolynomials(); break;
-                case 4: try{clearScreen();}catch (IOException | InterruptedException e){
+                case 1:replacePolynomial(args);break;
+                case 2:addToPolynomial(args); break;
+                case 3:removePolynomial(args); break;
+                case 4:listPolynomials(); break;
+                case 5:try{clearScreen();}catch (IOException | InterruptedException e){
                     e.printStackTrace();
                     System.exit(2);
                 }break;
-                case 5: printHelp();
+                case 6: printHelp();
             }
         }
         keyboard.close();
@@ -101,7 +102,148 @@ public class Driver {
         }
         return true;
     }
+    private boolean replacePolynomial(String[] args){
+        if (args!=null&&!args[0].equals("")){
+            int local;
+            try {
+               local = Integer.parseInt(args[0].replaceAll(" ",""));
+            }catch (NumberFormatException e){
+                e.printStackTrace();
+                System.out.println(prefix+"-replace:If you keep getting errors please see the help section");
+                return false;
+            }
+            System.out.print(prefix+"-replace:Please enter the new polynomial:");
+            String temp = keyboard.nextLine();
+            if (verifyString(temp)){
+                this.polynomials.set(local,new Polynomial(temp));
+                return true;
+            }else{
+                return false;
+            }
+
+        }else{
+            System.out.print(prefix+"-replace:Please enter the index you want to replace with a new polynomial:");
+            int local;
+            while (true){
+                try {
+                    local = Integer.parseInt(keyboard.nextLine());
+                }catch (NumberFormatException e){
+                    e.printStackTrace();
+                    System.out.println(prefix+"-replace:If you keep getting errors please see the help section");
+                    return false;
+                }
+                if (local>=this.polynomials.size()){
+                    System.out.print(prefix+"-replace:The number you have entered is larger then the last index of "+this.polynomials.size()+" please enter a new number:");
+                    continue;
+                }
+                break;
+            }
+            System.out.print(prefix+"-replace:Please enter the new polynomial:");
+            String temp = keyboard.nextLine();
+            if (verifyString(temp)){
+                this.polynomials.set(local,new Polynomial(temp));
+                return true;
+            }else{
+                System.out.println(prefix+"-replace:The polynomial you have entered is invalid please see the help section if you keep getting this error");
+                return false;
+            }
+        }
+    }
+    private boolean addToNoMod(String[] args){
+            if (args==null){
+                System.out.print(prefix+"-add:noMod:Please enter the polynomial you want to add to:");
+                String input = keyboard.nextLine();
+                if (verifyString(input)){
+                    System.out.print(prefix+"-add:noMod:Do you want to use an already existing polynomial? [Y/N]:");
+                    if (keyboard.nextLine().equalsIgnoreCase("y")){
+                        System.out.print(prefix+"-add:noMod:Enter the index you want to use:");
+                        int local;
+                        while (true) {
+                            try {
+                                local = Integer.parseInt(keyboard.nextLine());
+                            }catch (NumberFormatException e){
+                                e.printStackTrace();
+                                System.out.println(prefix+"-add:noMod:If you keep getting errors please see the help page");
+                                return false;
+                            }
+                            if (local>=this.polynomials.size()){
+                                System.out.print(prefix+"-add:noMod:The number you have entered is invalid largest index is"+(this.polynomials.size()-1)+ " please enter a new one:");
+                                continue;
+                            }break;
+                        }
+                        System.out.println(prefix+"-add:noMod:result: "+(new Polynomial(input).addNew(this.polynomials.get(local))));
+                        return true;
+                    }else{
+                        System.out.print(prefix+"-add:noMod:Please enter the polynomial:");
+                        String input1 = keyboard.nextLine();
+                        if (verifyString(input1)){
+                            System.out.println(prefix+"-add:noMod:result: "+(new Polynomial(input).addNew(new Polynomial(input1))));
+                            return true;
+                        }else{
+                            System.out.println(prefix+"-add:noMod:The given polynomial is invalid please see the help page if you keep getting this error");
+                            return false;
+                        }
+                    }
+                }else{
+                    System.out.println(prefix+"-add:noMod:The given polynomial was invalid please see the help section if you keep getting this error");
+                    return false;
+                }
+            }else if (args.length<2){
+                Polynomial obj;
+                try{
+                    obj = polynomials.get(Integer.parseInt(args[0].replaceAll(" ", "")));
+                }catch (NumberFormatException|IndexOutOfBoundsException e){
+                    e.printStackTrace();
+                    System.out.println(prefix+"-add:noMod:If you keep getting errors please see the help section");
+                    return false;
+                }
+                System.out.print(prefix+"-add:noMod:Please enter a polynomial to add to:");
+                String input = keyboard.nextLine();
+                if (verifyString(input)){
+                    System.out.println(prefix+"-add:noMod:result: "+ obj.addNew(new Polynomial(input)));
+                    return true;
+                }else{
+                    System.out.println(prefix+"-add:noMod:The given polynomial is invalid if you keep getting this error please see the help section");
+                    return false;
+                }
+            }else{
+                    Polynomial obj;
+                    Polynomial obj1;
+                    try {
+                        obj = this.polynomials.get(Integer.parseInt(args[0].replaceAll(" ","")));
+                        obj1 = this.polynomials.get(Integer.parseInt(args[1].replaceAll(" ","")));
+                    }catch (Exception e){
+                        e.printStackTrace();
+                        System.out.println(prefix+"-add:noMod:If you keep getting errors please see the help section");
+                        return false;
+                    }
+                    System.out.println(prefix+"-add:noMod:result: "+ obj.addNew(obj1));
+                    return true;
+            }
+    }
     private boolean addToPolynomial(String[] args){
+        if (args!=null){
+           for(int i=0; i<args.length;i++){
+               if (args[i].replaceAll(" ","").equalsIgnoreCase("nomod")){
+                       if (args.length>1){
+                           int counter = 0;
+                           int index =0;
+                           String[] innerArg = new String[args.length-1];
+                           for (String string:args) {
+                               if (counter!=i){
+                                   innerArg[index++] = string;
+                               }
+                               counter++;
+                           }
+                           return addToNoMod(innerArg);
+
+                       }else{
+                         return addToNoMod(null);
+                       }
+               }
+           }
+        }
+
         if (args==null){
             System.out.print(prefix+"-add:"+"please enter a polynomial\n"+prefix+"-add:");
             String input = keyboard.nextLine();
@@ -127,7 +269,10 @@ public class Driver {
                             }
                         }
                     }
-                    this.polynomials.get(local).add(new Polynomial(input));
+                    Polynomial temp = new Polynomial(input);
+                    temp.add(this.polynomials.get(local));
+                    this.polynomials.add(temp);
+                    System.out.println(prefix+"-add:result: "+temp);
                     return true;
                 }else{
                     System.out.print(prefix+"-add:enter a new polynomial\n"+prefix+"-add:");
@@ -136,6 +281,7 @@ public class Driver {
                         Polynomial temp = new Polynomial(input1);
                         temp.add(new Polynomial(input));
                         this.polynomials.add(temp);
+                        System.out.println(prefix+"-add:result: "+ temp);
                         return true;
                     }else{
                         System.out.println(prefix+"-add:the given polynomial is invalid, if you keep getting this error please use the help command");
@@ -143,12 +289,12 @@ public class Driver {
                     }
                 }
             }else{
-                System.out.println("polynomial entered was invalid");
+                System.out.println(prefix+"-add:the given polynomial is invalid, if you keep getting this error please use the help command");
                 return false;
             }
         }else{
             if (args.length<2) {
-                Polynomial obj = null;
+                Polynomial obj;
                 try {
                     obj = this.polynomials.get(Integer.parseInt(args[0].replaceAll(" ","")));
                 } catch (IndexOutOfBoundsException | NumberFormatException exception) {
@@ -158,8 +304,8 @@ public class Driver {
                 }
                 System.out.print(prefix+"-add:Do you want to use an already existing Polynomial? [Y/N]:");
                 if (keyboard.nextLine().equalsIgnoreCase("y")){
-                    System.out.print(prefix+"-add:What index do you to use:");
-                    int local = 0;
+                    System.out.print(prefix+"-add:What index do you want to use:");
+                    int local;
                     while (true){
                         try {
                             local = Integer.parseInt(keyboard.nextLine());
@@ -174,12 +320,14 @@ public class Driver {
                         }
                     }
                     this.polynomials.get(local).add(new Polynomial(obj));
+                    System.out.println(prefix+"-add:result: "+this.polynomials.get(local).toString());
                     return true;
                 }else{
                     System.out.print(prefix+"-add:please enter the polynomial you want to add too:");
                     String input = keyboard.nextLine();
                     if (verifyString(input)){
                         obj.add(new Polynomial(input));
+                        System.out.println(prefix+"-add:result: "+ obj);
                         return true;
                     }else{
                         System.out.println(prefix+"-add:the given polynomial is invalid, if you keep getting this error please use the help command");
@@ -198,6 +346,7 @@ public class Driver {
                     return false;
                 }
                 obj1.add(obj2);
+                System.out.println(prefix+"-add:result: "+ obj1);
                 return true;
             }
         }
