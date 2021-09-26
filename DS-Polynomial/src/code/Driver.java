@@ -397,12 +397,12 @@ public class Driver {
             nodeStrings[i] = this.polynomials.get(i).toString();
             longestLength = Math.max(nodeStrings[i].length(), longestLength);
         }
-        int tableLength = longestLength+3;
+        int tableLength = longestLength+5;
         String tableUnderscores = String.join("",Collections.nCopies(tableLength,"_"));
         String tableDashes = String.join("",Collections.nCopies(tableLength,"-"));
         System.out.println(tableUnderscores);
         for (int i =0; i<nodeStrings.length;i++){
-            System.out.println("|"+i+"|"+nodeStrings[i]+String.join("",Collections.nCopies(longestLength-nodeStrings[i].length()," "))+"|");
+            System.out.println("|"+i+"| "+nodeStrings[i]+String.join("",Collections.nCopies(longestLength-nodeStrings[i].length()," "))+"|");
             System.out.println(tableDashes);
         }
 
