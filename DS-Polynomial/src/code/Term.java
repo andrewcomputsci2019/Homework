@@ -1,7 +1,7 @@
 package code;
 
 
-public class Term implements Cloneable{
+public class Term implements Cloneable,Comparable<Term>{
     private int coefficient;
     private int exponent;
 
