@@ -165,4 +165,3 @@ public class Polynomial {
         return builder.toString().replaceAll("[|]","");
     }
 }
-// @TODO make a string constructor for polynomial
