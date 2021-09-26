@@ -105,7 +105,7 @@ public class Term implements Cloneable{
     }
 
     @Override
-    public int hashCode() { //needs to be implemented if the equals' method is override
+    public int hashCode() { //needs to be implemented if the equals' method is overridden
         int result = coefficient;
         result = 31 * result + exponent;
         return result;

@@ -62,8 +62,20 @@ public class Driver {
     }
     private static String getHelpMessage(){
         return "Creating a polynomial needs to be done in specific format otherwise the program will likely give unwanted results\nthe format can be defined as coefficient followed by x then a exponent constant should not have powers\nexamples: 2x^3+2x-1\n3x^1-8x+3" +
-                "\n2x^-5-5x+12\nadd to a polynomial can take an argument in which is the index assigned to already existing polynomial\nexample on usage 1 --index --index the -- is used to program to look for a index in the string\nif not given an argument the program will expect the user to type a polynomial in" +
-                "\ndelete polynomial functions in two ways you can give an argument using -- or you can enter it after executing the command examples 2 --index or 2 followed by entering the index you want to delete";
+                "\n2x^-5-5x+12\n" +
+                "Some functions offer flags that can be used to shortcut steps or change the functions behavior, functions that offer this are replacePolynomial,addToPolynomial,removePolynomial\n" +
+                "replacePolynomial allows you to specify the index before hand by using 1 --index example is 1 --1 \n" +
+                "This will prompt you to type in the new polynomial to replace the one in index one\n" +
+                "If not supplied an argument the program will ask you for an index and then the polynomial" +
+                "addToPolynomial offers the ability to specify index of the operation like if you wanted to add index 1 and 3 you could do 2 --1 --3\n" +
+                "this tells addToPolynomial to modify index 1 by adding index 3 to it\n" +
+                "If you do not want to modify the index but want to add a polynomial to it you can use the --noMod or --nomod option to tell the program to not store or change the index of the result\n" +
+                "addToPolynomial also allows you to just enter a single index and then specify the new polynomial you want to add to i example\n" +
+                "2 --1 this tells program to use index 1 as the polynomial to be added to then you would either use an already existing polynomial or make a new one\n" +
+                "removePolynomial take an optional index flag that is used to shortcut specify one inside the function example \n" +
+                "3 --1 removes the index 1 from the list\n" +
+                "ListPolynomial can be used to get the index and values of polynomials\n" +
+                "Clear screen clears the terminal screen works on Unix/linux based system as well as windows";
     }
     private void clearScreen() throws IOException, InterruptedException {
         switch (os){
