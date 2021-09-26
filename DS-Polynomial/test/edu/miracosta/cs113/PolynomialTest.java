@@ -1,3 +1,10 @@
+package edu.miracosta.cs113;
+import org.junit.Test;
+import code.*;
+
+import java.util.LinkedList;
+
+import static org.junit.Assert.*;
 /**
  * Polynomial.java : JUnit test for Polynomial ADT implementation.
  * Tests are organized in the strategic development process for the class only,
@@ -16,94 +23,88 @@
  * @author  Nery Chapeton-Lamas <nchapetonLamas@miracosta.edu>
  * @version 1.0
  */
-
-package edu.miracosta.cs113;
-
-import org.junit.Test;
-import static org.junit.Assert.*;
-import code.Term;
 public class PolynomialTest {
 
     //TERMS + POLYNOMIALS with unique terms (no duplicate terms = terms with same exponents)
     private static final Term[] UNIQUE_TERMS1 = {   new Term(5, 7),
-                                                    new Term(5, 9),
-                                                    new Term(-2, 2),
-                                                    new Term(-4, -3)};
+            new Term(5, 9),
+            new Term(-2, 2),
+            new Term(-4, -3)};
     private static final String[] UNIQUE_POLY1 = {  "5x^7",
-                                                    "5x^9 + 5x^7",
-                                                    "5x^9 + 5x^7 - 2x^2",
-                                                    "5x^9 + 5x^7 - 2x^2 - 4x^-3"};
+            "5x^9 + 5x^7",
+            "5x^9 + 5x^7 - 2x^2",
+            "5x^9 + 5x^7 - 2x^2 - 4x^-3"};
     private static final int[] UNIQUE_FINAL_ORDER1 = {1, 0, 2, 3};
 
     private static final Term[] UNIQUE_TERMS2 = {   new Term(15, 5),
-                                                    new Term(145, 9),
-                                                    new Term(-5, 7)};
+            new Term(145, 9),
+            new Term(-5, 7)};
     private static final String[] UNIQUE_POLY2 = {  "15x^5",
-                                                    "145x^9 + 15x^5",
-                                                    "145x^9 - 5x^7 + 15x^5"};
+            "145x^9 + 15x^5",
+            "145x^9 - 5x^7 + 15x^5"};
     private static final int[] UNIQUE_FINAL_ORDER2 = {1, 2, 0};
 
     private static final Term[] UNIQUE_ADD_ORDER = {
-                                                    new Term(150, 9),
-                                                    new Term(15, 5),
-                                                    new Term(-2, 2),
-                                                    new Term(-4, -3),
+            new Term(150, 9),
+            new Term(15, 5),
+            new Term(-2, 2),
+            new Term(-4, -3),
     };
 
 
     //TERMS + POLYNOMIALS with unique terms (no duplicate terms = terms with same exponents)
     private static final Term[] DUPLICATE_TERMS = {
-                            new Term(-12, 11),
-                            new Term(3, 13),
-                            new Term(-1, 4),
-                            new Term(9, 6),
-                            new Term(52, 8),
-                            new Term(-88, 10),
-                            new Term(11, 12),
-                            new Term(7, 2),
-                            new Term(-1, -1),
-                            new Term(4, 1),
-                            new Term(12, 0),
-                            new Term(100, 5),
-                            new Term(100, 10),  //duplicate
-                            new Term(-10, 0),   //duplicate
-                            new Term(-1, -1),   //duplicate
-                            new Term(-2, 13),   //duplicate
-                            new Term(-50, 8)    //duplicate
+            new Term(-12, 11),
+            new Term(3, 13),
+            new Term(-1, 4),
+            new Term(9, 6),
+            new Term(52, 8),
+            new Term(-88, 10),
+            new Term(11, 12),
+            new Term(7, 2),
+            new Term(-1, -1),
+            new Term(4, 1),
+            new Term(12, 0),
+            new Term(100, 5),
+            new Term(100, 10),  //duplicate
+            new Term(-10, 0),   //duplicate
+            new Term(-1, -1),   //duplicate
+            new Term(-2, 13),   //duplicate
+            new Term(-50, 8)    //duplicate
     };
     private static final int DUPLICATE_NUM = 5;
     private static final String[] DUPLICATE_POLY = {
-                            "- 12x^11",
-                            "3x^13 - 12x^11",
-                            "3x^13 - 12x^11 - x^4",
-                            "3x^13 - 12x^11 + 9x^6 - x^4",
-                            "3x^13 - 12x^11 + 52x^8 + 9x^6 - x^4",
-                            "3x^13 - 12x^11 - 88x^10 + 52x^8 + 9x^6 - x^4",
-                            "3x^13 + 11x^12 - 12x^11 - 88x^10 + 52x^8 + 9x^6 - x^4",
-                            "3x^13 + 11x^12 - 12x^11 - 88x^10 + 52x^8 + 9x^6 - x^4 + 7x^2",
-                            "3x^13 + 11x^12 - 12x^11 - 88x^10 + 52x^8 + 9x^6 - x^4 + 7x^2 - x^-1",
-                            "3x^13 + 11x^12 - 12x^11 - 88x^10 + 52x^8 + 9x^6 - x^4 + 7x^2 + 4x - x^-1",
-                            "3x^13 + 11x^12 - 12x^11 - 88x^10 + 52x^8 + 9x^6 - x^4 + 7x^2 + 4x + 12 - x^-1",
-                            "3x^13 + 11x^12 - 12x^11 - 88x^10 + 52x^8 + 9x^6 + 100x^5 - x^4 + 7x^2 + 4x + 12 - x^-1",
-                            "3x^13 + 11x^12 - 12x^11 + 12x^10 + 52x^8 + 9x^6 + 100x^5 - x^4 + 7x^2 + 4x + 12 - x^-1",
-                            "3x^13 + 11x^12 - 12x^11 + 12x^10 + 52x^8 + 9x^6 + 100x^5 - x^4 + 7x^2 + 4x + 2 - x^-1",
-                            "3x^13 + 11x^12 - 12x^11 + 12x^10 + 52x^8 + 9x^6 + 100x^5 - x^4 + 7x^2 + 4x + 2 - 2x^-1",
-                            "x^13 + 11x^12 - 12x^11 + 12x^10 + 52x^8 + 9x^6 + 100x^5 - x^4 + 7x^2 + 4x + 2 - 2x^-1",
-                            "x^13 + 11x^12 - 12x^11 + 12x^10 + 2x^8 + 9x^6 + 100x^5 - x^4 + 7x^2 + 4x + 2 - 2x^-1",
+            "- 12x^11",
+            "3x^13 - 12x^11",
+            "3x^13 - 12x^11 - x^4",
+            "3x^13 - 12x^11 + 9x^6 - x^4",
+            "3x^13 - 12x^11 + 52x^8 + 9x^6 - x^4",
+            "3x^13 - 12x^11 - 88x^10 + 52x^8 + 9x^6 - x^4",
+            "3x^13 + 11x^12 - 12x^11 - 88x^10 + 52x^8 + 9x^6 - x^4",
+            "3x^13 + 11x^12 - 12x^11 - 88x^10 + 52x^8 + 9x^6 - x^4 + 7x^2",
+            "3x^13 + 11x^12 - 12x^11 - 88x^10 + 52x^8 + 9x^6 - x^4 + 7x^2 - x^-1",
+            "3x^13 + 11x^12 - 12x^11 - 88x^10 + 52x^8 + 9x^6 - x^4 + 7x^2 + 4x - x^-1",
+            "3x^13 + 11x^12 - 12x^11 - 88x^10 + 52x^8 + 9x^6 - x^4 + 7x^2 + 4x + 12 - x^-1",
+            "3x^13 + 11x^12 - 12x^11 - 88x^10 + 52x^8 + 9x^6 + 100x^5 - x^4 + 7x^2 + 4x + 12 - x^-1",
+            "3x^13 + 11x^12 - 12x^11 + 12x^10 + 52x^8 + 9x^6 + 100x^5 - x^4 + 7x^2 + 4x + 12 - x^-1",
+            "3x^13 + 11x^12 - 12x^11 + 12x^10 + 52x^8 + 9x^6 + 100x^5 - x^4 + 7x^2 + 4x + 2 - x^-1",
+            "3x^13 + 11x^12 - 12x^11 + 12x^10 + 52x^8 + 9x^6 + 100x^5 - x^4 + 7x^2 + 4x + 2 - 2x^-1",
+            "x^13 + 11x^12 - 12x^11 + 12x^10 + 52x^8 + 9x^6 + 100x^5 - x^4 + 7x^2 + 4x + 2 - 2x^-1",
+            "x^13 + 11x^12 - 12x^11 + 12x^10 + 2x^8 + 9x^6 + 100x^5 - x^4 + 7x^2 + 4x + 2 - 2x^-1",
     };
     private static final Term[] DUPLICATE_FINAL_ORDER = {
-                            new Term(1, 13),
-                            new Term(11, 12),
-                            new Term(-12, 11),
-                            new Term(12, 10),
-                            new Term(2, 8),
-                            new Term(9, 6),
-                            new Term(100, 5),
-                            new Term(-1, 4),
-                            new Term(7, 2),
-                            new Term(4, 1),
-                            new Term(2, 0),
-                            new Term(-2, -1),
+            new Term(1, 13),
+            new Term(11, 12),
+            new Term(-12, 11),
+            new Term(12, 10),
+            new Term(2, 8),
+            new Term(9, 6),
+            new Term(100, 5),
+            new Term(-1, 4),
+            new Term(7, 2),
+            new Term(4, 1),
+            new Term(2, 0),
+            new Term(-2, -1),
     };
 
 
@@ -296,6 +297,16 @@ public class PolynomialTest {
 
             assertTrue("Shallow copy of Term object in Polynomial", originalTerm != copyTerm);
 
+        }
+    }
+    @Test
+    public void testStringConstructor(){
+        LinkedList<Polynomial> polynomials = new LinkedList<>();
+        for (String poly: DUPLICATE_POLY){
+            polynomials.add(new Polynomial(poly));
+        }
+        for(int i=0; i<DUPLICATE_POLY.length; i++){
+            assertEquals(DUPLICATE_POLY[i].replaceAll(" ",""),polynomials.get(i).toString());
         }
     }
 

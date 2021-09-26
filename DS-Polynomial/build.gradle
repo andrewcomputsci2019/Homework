@@ -3,7 +3,7 @@
 plugins{
     id "java"
 }
-
+apply plugin: 'java'
 sourceCompatibility = 1.8
 
 // Define source sets which deviate from the default setup expected in Gradle projects
