@@ -15,6 +15,8 @@
 /DS-Polynomial/.gradle
 /DS-Polynomial/gradle
 /DS-Polynomial/gradlew
+/DS-Polynomial/images/Main_test.png
+/DS-Polynomial/images/Main_test_rezied.png
 /DS-DoubleLinkedList2/.gradle
 /DS-DoubleLinkedList2/.idea
 /DS-DubleLinkedList2/gradle
@@ -22,3 +24,4 @@
 /DS-DubleLinkedList2/gradlew
 /DS-DubleLinkedList2/gradlew.bat
 /DS-DoubleLinkedList2/.gitignore
+
