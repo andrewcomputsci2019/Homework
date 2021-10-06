@@ -24,4 +24,9 @@
 /DS-DubleLinkedList2/gradlew
 /DS-DubleLinkedList2/gradlew.bat
 /DS-DoubleLinkedList2/.gitignore
-
+/DS-StackQueue/.travis.yml
+/DS-StackQueue/gradle
+/DS-StackQueue/.idea
+/DS-StackQueue/.gradle
+/DS-StackQueue/gradlew
+/DS-StackQueue/gradlew.bat
