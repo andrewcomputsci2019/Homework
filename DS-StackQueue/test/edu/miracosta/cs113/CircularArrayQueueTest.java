@@ -56,7 +56,7 @@ public class CircularArrayQueueTest {
     @Before
     public void setup() {
         // Instantiate circular array queue with an initial capacity of 5
-        //circularQueue = new CircularArrayQueue<String>(INITIAL_CAPACITY);
+        circularQueue = new CircularArrayQueue<String>(INITIAL_CAPACITY);
     }
 
     // region peek and element tests
