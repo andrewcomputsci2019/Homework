@@ -2,23 +2,42 @@ package edu.miracosta.cs113;
 
 import java.lang.reflect.Array;
 import java.util.*;
-
+@SuppressWarnings("unchecked") // does not matter here because the compiler will prevent non generic objects
 public class CircularArrayQueue<E> implements Queue<E> {
+    /**
+     * index of the Front of the queue
+     */
     private int front;
+    /**
+     * index of the Rear of the queue
+     */
     private int rear;
+    /**
+     * How many elements in the queue
+     */
     private int size;
+    /**
+     * The amount of space the array has in terms of elements
+     */
     private int capacity;
-    private E[] circularArrayQueue;
+    /**
+     * the array that holds the data
+     */
+    private E[] circularArrayQueue; // should be an object array to avoid generic casting issue
     private static final int DEFAULT_CAPACITY = 10;
     public CircularArrayQueue(){
-        circularArrayQueue = (E[]) new Object[DEFAULT_CAPACITY];
+        this(DEFAULT_CAPACITY); // makes queue with default capacity
     }
     public CircularArrayQueue(int initialCapacity){
         circularArrayQueue = (E[]) new Object[initialCapacity];
+        front=0;
+        rear=initialCapacity-1;
+        size=0;
+        capacity = initialCapacity;
     }
     @Override
     public int size() {
-        return circularArrayQueue.length;
+        return size;
     }
 
     @Override
@@ -71,11 +90,24 @@ public class CircularArrayQueue<E> implements Queue<E> {
 
     @Override
     public boolean add(E e) {
-        return false;
+       return offer(e);
     }
 
     @Override
-    public boolean remove(Object o) {
+    public boolean remove(Object o) { //if object is not rear or head
+        if (o.equals(circularArrayQueue[rear])){
+
+        }else if (o.equals(circularArrayQueue[front])){
+            try{
+                remove();
+                return true;
+            }catch (Exception e){
+                return false;
+            }
+        }
+        else{
+
+        }
         return false;
     }
 
@@ -86,7 +118,10 @@ public class CircularArrayQueue<E> implements Queue<E> {
 
     @Override
     public boolean addAll(Collection<? extends E> c) {
-        return false;
+        for (E thing: c){
+            add(thing);
+        }
+        return true;
     }
 
     @Override
@@ -106,44 +141,91 @@ public class CircularArrayQueue<E> implements Queue<E> {
         }
         size=0;
         front=0;
-        rear=0;
+        rear=capacity-1;
     }
 
     @Override
     public boolean offer(E e) {
-        return false;
+        if (size == capacity) {
+            reallocate();
+        }
+        circularArrayQueue[(rear=(rear+1)%capacity)] = e;
+        size++;
+        return true;
     }
 
     @Override
     public E remove() {
-        return null;
+        if (!isEmpty()) {
+            E data = circularArrayQueue[front];
+            circularArrayQueue[front] = null;
+            front = (front+1)%capacity;
+            size--;
+            return data;
+        }else{
+            throw new NoSuchElementException("the queue is empty");
+        }
+
     }
 
     @Override
     public E poll() {
-        return null;
+        if (isEmpty()){
+            return null;
+        }
+        E data = circularArrayQueue[front];
+        circularArrayQueue[front] = null;
+        front = (front+1)%capacity;
+        size--;
+        return data;
     }
 
     @Override
     public E element() {
-        return null;
+        if (!isEmpty()){
+            return circularArrayQueue[front];
+        }else{
+            throw new NoSuchElementException("Queue is emtpy");
+        }
     }
 
     @Override
     public E peek() {
-        return null;
+        if (isEmpty()){
+            return null;
+        }
+        return circularArrayQueue[front];
     }
 
     /**
-     * reallocate method for internal array
+     * reallocate internal array to capacity*2 size
      */
     private void reallocate(){
-
+        E[] temp = (E[]) new Object[(capacity*=2)]; //needes to be changed to fix issue with rear being larger than front
+        copy(temp);
+        front= 0;
+        rear=size-1;
+        circularArrayQueue = temp;
     }
     /**
      * trim array to size
      */
-    private void trim(){
-
+    public void trim(){
+        E[] temp = (E[]) new Object[size];
+        copy(temp);
+        front =0;
+        rear=size;
+        capacity=size;
+        circularArrayQueue = temp;
+    }
+    private void copy(E[] array){
+        if (rear<front) // case where array loops back to index 0-front
+        {
+            System.arraycopy(circularArrayQueue,front,array,0,size-front);
+            System.arraycopy(circularArrayQueue,rear,array,size-front,front-rear);
+        }else{
+            //@TODO need to finish this side of the reallocation
+            System.arraycopy(circularArrayQueue,0,array,0,size);
+        }
     }
 }
