@@ -17,7 +17,7 @@ You are provided with a `StackInterface` to **implement your stack, make sure to
 
 Make sure to **provide a sequence diagram** for `isPalindrome()`, it should include more details than just the steps outlined above.  Add the image (PNG, JPEG, etc.) in markdown in the space below:
 
-**[//Insert Sequence Diagram//]**
+![ Sequence Diagram](./images/PalindromeTest_isPalindrome.png)
 
 ----------
 
