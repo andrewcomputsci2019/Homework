@@ -214,7 +214,7 @@ public class CircularArrayQueue<E> implements Queue<E> {
         E[] temp = (E[]) new Object[size];
         copy(temp);
         front =0;
-        rear=size;
+        rear=size-1;
         capacity=size;
         circularArrayQueue = temp;
     }
