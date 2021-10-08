@@ -4,32 +4,32 @@ import java.util.ArrayList;
 import java.util.EmptyStackException;
 
 public class ArrayListStack<E> implements StackInterface<E>{
-    private final ArrayList<E> queue;
+    private final ArrayList<E> stack;
     public ArrayListStack(){
-        queue = new ArrayList<>();
+        stack = new ArrayList<>();
     }
 
 
     @Override
     public boolean empty() {
-        return queue.size()==0;
+        return stack.size()==0;
     }
 
     @Override
     public E peek() {
         checkSize();
-        return queue.get(queue.size()-1);
+        return stack.get(stack.size()-1);
     }
 
     @Override
     public E pop() {
         checkSize();
-        return queue.remove(queue.size()-1);
+        return stack.remove(stack.size()-1);
     }
 
     @Override
     public E push(E obj) {
-        queue.add(obj);
+        stack.add(obj);
         return obj;
     }
     private void checkSize(){

@@ -2,6 +2,8 @@ package edu.miracosta.cs113;
 
 import java.lang.reflect.Array;
 import java.util.*;
+import java.util.function.Predicate;
+
 @SuppressWarnings("unchecked") // does not matter here because the compiler will prevent non generic objects
 public class CircularArrayQueue<E> implements Queue<E> {
     /**
@@ -94,26 +96,18 @@ public class CircularArrayQueue<E> implements Queue<E> {
     }
 
     @Override
-    public boolean remove(Object o) { //if object is not rear or head
-        if (o.equals(circularArrayQueue[rear])){
-
-        }else if (o.equals(circularArrayQueue[front])){
-            try{
-                remove();
-                return true;
-            }catch (Exception e){
-                return false;
-            }
-        }
-        else{
-
-        }
-        return false;
+    public boolean remove(Object o) { //if object is not rear or head array needs to be shifted/reallocated
+        throw new UnsupportedOperationException("Not implemented");
     }
 
     @Override
     public boolean containsAll(Collection<?> c) {
-        return false;
+        for (Object thing: c){
+            if (!contains(thing)){
+                return false;
+            }
+        }
+        return true;
     }
 
     @Override
@@ -126,12 +120,24 @@ public class CircularArrayQueue<E> implements Queue<E> {
 
     @Override
     public boolean removeAll(Collection<?> c) {
-        return false;
+        for (Object obj: c){
+            if (!remove(obj)){
+                return false;
+            }
+        }
+        return true;
     }
 
     @Override
     public boolean retainAll(Collection<?> c) {
-        return false;
+        boolean changed = false;
+        for (Object thing: c){
+            Predicate<Object> filter = obj-> !obj.equals(thing);
+            if(removeIf(filter)){
+                changed=true;
+            }
+        }
+        return changed;
     }
 
     @Override
@@ -225,7 +231,7 @@ public class CircularArrayQueue<E> implements Queue<E> {
             System.arraycopy(circularArrayQueue,rear,array,size-front,front-rear);
         }else{
             //@TODO need to finish this side of the reallocation
-            System.arraycopy(circularArrayQueue,0,array,0,size);
+            System.arraycopy(circularArrayQueue,front,array,0,size);
         }
     }
 }
