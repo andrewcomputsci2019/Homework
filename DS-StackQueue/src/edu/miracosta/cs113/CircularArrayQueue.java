@@ -1,10 +1,8 @@
 package edu.miracosta.cs113;
-
-import java.lang.reflect.Array;
 import java.util.*;
 import java.util.function.Predicate;
 
-@SuppressWarnings("unchecked") // does not matter here because the compiler will prevent non generic objects
+@SuppressWarnings("unchecked") // does not matter here because the compiler will prevent non-generic objects
 public class CircularArrayQueue<E> implements Queue<E> {
     /**
      * index of the Front of the queue
@@ -207,7 +205,7 @@ public class CircularArrayQueue<E> implements Queue<E> {
      * reallocate internal array to capacity*2 size
      */
     private void reallocate(){
-        E[] temp = (E[]) new Object[(capacity*=2)]; //needes to be changed to fix issue with rear being larger than front
+        E[] temp = (E[]) new Object[(capacity*=2)]; //needs to be changed to fix issue with rear being larger than front
         copy(temp);
         front= 0;
         rear=size-1;
@@ -230,7 +228,6 @@ public class CircularArrayQueue<E> implements Queue<E> {
             System.arraycopy(circularArrayQueue,front,array,0,size-front);
             System.arraycopy(circularArrayQueue,rear,array,size-front,front-rear);
         }else{
-            //@TODO need to finish this side of the reallocation
             System.arraycopy(circularArrayQueue,front,array,0,size);
         }
     }
