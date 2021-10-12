@@ -1,7 +1,7 @@
 #StackQueue
 Stack + Queue Implementation, Solving Palindrome using Stacks
 
-**[//Insert Build Status Image//]**
+![//Insert Build Status Image//](./Images/Screenshot_2021-10-12_164055.png)
 
 > **"I will, in fact, claim that the difference between a bad programmer and a good one is whether [they] consider [their] code or [their] data structures more important. Bad programmers worry about the code. Good programmers worry about data structures and their relationships."**
 > — Linus Torvalds [recent news on Linus Torvalds](https://www.newyorker.com/science/elements/after-years-of-abusive-e-mails-the-creator-of-linux-steps-aside)
