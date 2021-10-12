@@ -47,7 +47,7 @@ public class CircularArrayQueue<E> implements Queue<E> {
 
     @Override
     public boolean contains(Object o) {
-        for (E thing: circularArrayQueue){ // you can also use the arraylist contains as well
+        for (E thing: circularArrayQueue){
             if (o.equals(thing)){
                 return true;
             }
@@ -205,7 +205,7 @@ public class CircularArrayQueue<E> implements Queue<E> {
      * reallocate internal array to capacity*2 size
      */
     private void reallocate(){
-        E[] temp = (E[]) new Object[(capacity*=2)]; //needs to be changed to fix issue with rear being larger than front
+        E[] temp = (E[]) new Object[(capacity*=2)];
         copy(temp);
         front= 0;
         rear=size-1;
