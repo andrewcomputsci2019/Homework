@@ -43,7 +43,7 @@ public class ChangeCalculator {
     }
     private static int ChangeRecursion(int quarter, int dime, int nickel, int penny, HashSet<CoinCombo>set){
         System.out.println(String.format("%dq,%dd,%dn,%dp",quarter,dime,nickel,penny));
-        if (!set.add(new CoinCombo(quarter, dime, nickel, penny))){ // IDK could only think of this to solve duplicate issue
+        if (!set.add(new CoinCombo(quarter, dime, nickel, penny))){ // IDK could only think of this to solve duplicate issue hashmap could work too
             return 0;
         }
         int sum=1;

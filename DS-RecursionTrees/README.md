@@ -33,24 +33,24 @@ The two methods will be tested using 5 cent increments between 5 cents and 30 ce
 1. Draw binary expression trees for the following infix expressions.  Your trees should enforce the Java rules for operator evaluation (higher-precedence operators before lower-precedence operators and left associativity.) Note: they should also preserve the order seen in the expressions.
   - `x / y + a - b * c`
 
-  **[//Insert image here//]**
+  ![ANS1](doc/ans/Lab_Tree-1.jpg)
   - `(x * a) - y / b * (c + d)`
-  
-  **[//Insert image here//]**
+
+  ![ANS1](doc/ans/Lab_Tree-2.jpg)
   
   - `(x + (a * (b - c)))/ d`
-  
-  **[//Insert image here//]**
+
+  ![ANS1](doc/ans/Lab_Tree-3.jpg)
   
 2. Using the Huffman tree in the figure below:
 
 ![Image of huffman code tree](doc/problemImages/huffman.png)
 
   - Write the binary string for the message "scissors cuts paper":
-    - Binary String = `insert here`
+    - Binary String = `0011000000011001110010010001111100000000011101001111110000110101000010100010`
   - Decode the following binary string using the tree above:
   `1100010001010001001011101100011111110001101010111101101001`
-    - Decoded String = `insert here`
+    - Decoded String = `Where Is Waldo`
 
 3. For each of the two trees shown below, answer these questions:
 - What is its height?
