@@ -60,35 +60,44 @@ The two methods will be tested using 5 cent increments between 5 cents and 30 ce
 
 ![Image of tree for problem 3A](doc/problemImages/problem3A.png)
 
-`insert answers here`
+
+- `3` 
+- `no`
+- `yes`
+- `no`
+- ![image of rewrite](doc/problemImages/3.1-1.jpg)
 
 ![Image of tree for problem 3B](doc/problemImages/problem3B.png)
 
-`insert answers here`
+- `3`
+- `no`
+- `yes`
+- `no`
+- ![image of rewrite](doc/problemImages/3.2-2.jpg)
 
 4. For the binary trees shown below, indicat whether each tree is full, perfect, complete, or none of the above (note that a tree could be more than one of these!)
 
 ![Image of tree for problem 4A](doc/problemImages/problem4A.png)
 
-`insert answers here`
+`complete`
 
 ![Image of tree for problem 4B](doc/problemImages/problem4B.png)
 
-`insert answers here`
+`full and complete`
 
 ![Image of tree for problem 4C](doc/problemImages/problem4C.png)
 
-`insert answers here`
+`Full`
 
 ![Image of tree for problem 4A](doc/problemImages/huffman.png)
 
-`insert answers here`
+`Full`
 
 5. Represent the general tree below as a binary tree
 
 ![Image of general tree for problem 5](doc/problemImages/problem5-general.png)
 
-**[//Insert image here//]**
+![binary tree](doc/problemImages/3.5-3.jpg)
 
 
 ----------
