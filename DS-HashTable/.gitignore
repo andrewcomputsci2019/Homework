@@ -1,0 +1,6 @@
+gradlew.bat
+gradlew
+.travis.yml
+gradle/
+.idea
+.gradle
