@@ -10,9 +10,11 @@ public class HashTableChain<K, V> implements Map<K, V>  {
 
     private LinkedList<Entry<K, V>>[] table;
     private  int numKeys;
-    private static final int CAPACITY = 101;
+    /*
+    * For rehashing use 2n+1 the other option is to use xor and bitshift greats bit to lower and user a power of two size
+    * */
+    private static final int DEFAULT_CAPACITY = 101;
     private static final double LOAD_THRESHOLD = 1.5;
-
     ///////////// ENTRY CLASS ///////////////////////////////////////
 
     /**
@@ -30,8 +32,8 @@ public class HashTableChain<K, V> implements Map<K, V>  {
          * @param value the value
          */
         public Entry(K key, V value) {
-            this.key = key ;
-            this.value = value ;
+            this.key = key;
+            this.value = value;
         }
 
         /**
@@ -47,7 +49,7 @@ public class HashTableChain<K, V> implements Map<K, V>  {
          * @return the value
          */
         public V getValue() {
-            return value ;
+            return value;
         }
 
         /**
@@ -57,15 +59,13 @@ public class HashTableChain<K, V> implements Map<K, V>  {
          */
         public V setValue(V val) {
             V oldVal = value;
-            value = val ;
-            return oldVal ;
+            value = val;
+            return oldVal;
         }
         @Override
         public String toString() {
             return  key + "=" + value  ;
         }
-
-
 
     }
 
@@ -74,7 +74,7 @@ public class HashTableChain<K, V> implements Map<K, V>  {
     ////////////// EntrySet Class //////////////////////////////////
 
     /**
-     * Inner class to implement set view
+     * Inner class to implement set view, basically an iterator in map form
      */
     private class EntrySet extends AbstractSet<Map.Entry<K, V>> {
 
@@ -100,23 +100,44 @@ public class HashTableChain<K, V> implements Map<K, V>  {
      */
     private class SetIterator implements Iterator<Map.Entry<K, V>> {
 
-        private int index = 0 ;
+        private int index = 0;
         private Entry<K,V> lastItemReturned = null;
-        private Iterator<Entry<K, V>> iter = null;
+        private Iterator<Entry<K, V>> iter = null; // used to iterate the linkedList
 
         @Override
         public boolean hasNext() {
-        	// FILL HERE
+            return index<table.length;
         }
 
         @Override
         public Map.Entry<K, V> next() {
-        	// FILL HERE
+            if(this.iter!=null){ // if an iter is declared to exist
+                if(iter.hasNext()){//verify that it contains an item
+                    lastItemReturned = iter.next(); // assign lastItemReturn and return it
+                    return lastItemReturned;
+                }iter = null;//if iter does not contain an item, set it to null and advance to next index
+                index++;
+            }
+            while (this.hasNext()){//while index is a valid index in table, keep searching
+                if(table[index]!=null){ // if the index points to a defined LinkedList grabs its iterator
+                    iter = table[index].iterator();
+                    if(iter.hasNext()){//verify that the iterator has a next item
+                           lastItemReturned = iter.next();//return item found in the iterator
+                           return lastItemReturned;
+                    }
+                }
+                index++; // advance index if either index points to a null item, or if the defined LinkedList is empty
+            }
+            throw new NoSuchElementException("No element exist in map"); // out of indexes
         }
 
         @Override
         public void remove() {
-        	// FILL HERE
+            if(lastItemReturned==null) {
+                throw new IllegalStateException("next has not been called");
+            }
+            HashTableChain.this.remove(lastItemReturned.key);
+            lastItemReturned = null;
         }
     }
 
@@ -126,19 +147,19 @@ public class HashTableChain<K, V> implements Map<K, V>  {
      * Default constructor, sets the table to initial capacity size
      */
     public HashTableChain() {
-        table = new LinkedList[CAPACITY] ;
+        table = (LinkedList<Entry<K, V>>[]) new LinkedList[DEFAULT_CAPACITY];
     }
 
     // returns number of keys
     @Override
     public int size() {
-        // FILL HERE
+        return numKeys;
     }
 
     // returns boolean if table has no keys
     @Override
     public boolean isEmpty() {
-    	// FILL HERE
+        return numKeys>0;
     }
 
     // returns boolean if table has the searched for key
@@ -177,15 +198,15 @@ public class HashTableChain<K, V> implements Map<K, V>  {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder() ;
-        for (int i = 0 ; i < table.length ; i++ ) {
+        for (int i = 0; i < table.length; i++ ) {
             if (table[i] != null) {
                 for (Entry<K, V> nextItem : table[i]) {
-                    sb.append(nextItem.toString() + " ") ;
+                    sb.append(nextItem.toString()).append(" ");
                 }
                 sb.append(" ");
             }
         }
-        return sb.toString() ;
+        return sb.toString();
 
     }
 
@@ -194,18 +215,20 @@ public class HashTableChain<K, V> implements Map<K, V>  {
     @Override
     public V remove(Object key) {
     	// FILL HERE
+
     }
 
     // throws UnsupportedOperationException
     @Override
     public void putAll(Map<? extends K, ? extends V> m) {
-        throw new UnsupportedOperationException() ;
+        throw new UnsupportedOperationException();
     }
 
     // empties the table
     @Override
     public void clear() {
     	// Fill HERE
+        Arrays.fill(table,null);
     }
 
     // returns a view of the keys in set view
@@ -225,8 +248,7 @@ public class HashTableChain<K, V> implements Map<K, V>  {
     @Override
     public Set<Map.Entry<K, V>> entrySet() {
     	// FILL HERE
-
-
+        return new EntrySet();
     }
 
     @Override
