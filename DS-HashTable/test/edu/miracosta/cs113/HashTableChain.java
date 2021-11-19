@@ -1,5 +1,6 @@
 package edu.miracosta.cs113;
 import java.util.*;
+import java.util.function.Predicate;
 import java.util.stream.Stream;
 
 /**
@@ -167,27 +168,60 @@ public class HashTableChain<K, V> implements Map<K, V>  {
     // returns boolean if table has the searched for key
     @Override
     public boolean containsKey(Object key) {
-    	// Fill Here
-        //@TODO finish here
+        if(key==null){
+            return table[0].stream().anyMatch(obj-> obj.getKey()==null);
+        }
+        int hashIndex = key.hashCode()% table.length;
+        if(table[hashIndex]!=null){
+            return table[hashIndex].stream().anyMatch(obj-> obj.getKey().equals(key));
+        }
+        return false;
     }
 
     // returns boolean if table has the searched for value
     @Override
     public boolean containsValue(Object value) {
-    	// FILL HERE
-        //@TODO finish here
+        for (LinkedList<Entry<K, V>> entries : table) {
+            if (entries == null) {
+                continue;
+            }
+            for (Entry<K, V> entry : entries) {
+                if (entry.getValue().equals(value)) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     // returns Value if table has the searched for key
     @Override
     public V get(Object key) {
-    	// FILL HERE
-        //@TODO finish here
+        if(key==null){
+            return getNull();
+        }
+        int hashIndex = key.hashCode()%table.length;
+        LinkedList<Entry<K,V>> temp = table[hashIndex];
+        if(temp!=null && !temp.isEmpty()){
+            return temp.stream().filter(obj-> obj.getKey().equals(key)).map(Entry::getValue).findFirst().orElse(null);
+        }
+        return null;
+    }
+
+    /**
+     * Private helper method to find null key
+     * @return the null key value if one is present else null
+     */
+    private V getNull(){
+        return table[0]!=null?table[0].stream().filter(obj-> obj.getKey()==null).map(Entry::getValue).findFirst().orElse(null):null;
     }
 
     // adds the key and value pair to the table using hashing
     @Override
     public V put(K key, V value) {
+        if(key==null){
+            return putNull(value);
+        }
         int hashIndex = key.hashCode()%table.length;
         V valTemp = null;
         if(table[hashIndex]==null){
@@ -211,13 +245,34 @@ public class HashTableChain<K, V> implements Map<K, V>  {
             }
             temp.add(new Entry<>(key, value));*/
         }
-        if((++numKeys/(double)table.length)>LOAD_THRESHOLD){
-            rehash();
-        }
+        numKeys++;
+        checkForRehash();
         return valTemp;
     }
+    private V putNull(V value){
+        V temp = null;
+        if(table[0]==null){
+            LinkedList<Entry<K,V>> list = new LinkedList<>();
+            list.add(new Entry<>(null,value));
+            table[0]=list;
+        }else{
+            Optional<Entry<K,V>> optional = table[0].stream().filter(obj-> obj.getKey()==null).findFirst();
+            if(optional.isPresent()){
+                temp = optional.get().getValue();
+                optional.get().setValue(value);
+            }
+            table[0].add(new Entry<>(null,value));
+        }
+        numKeys++;
+        checkForRehash();
+        return temp;
+    }
 
-
+    private void checkForRehash(){
+        if((numKeys/(double)table.length)>LOAD_THRESHOLD){
+            rehash();
+        }
+    }
     /**
      * Resizes the table to be 2X +1 bigger than previous
      */
@@ -238,15 +293,31 @@ public class HashTableChain<K, V> implements Map<K, V>  {
             }
         }
         return sb.toString();
-
     }
 
     // remove an entry at the key location
     // return removed value
     @Override
     public V remove(Object key) {
-    	// FILL HERE
-        //@TODO finish this function
+        if(containsKey(key)){
+            int hashindex;
+            if(key ==null){
+                hashindex=0;
+            }else {
+                hashindex = key.hashCode() % table.length;
+            }
+            Predicate<Entry<K,V>> findKey = key==null?Kv-> Kv.getKey()==null:Kv-> Kv.getKey().equals(key);
+            Iterator<Entry<K,V>> iterator = table[hashindex].iterator();
+            while(iterator.hasNext()) {
+                Entry<K,V> temp = null;
+                if(findKey.test((temp=iterator.next()))){
+                    iterator.remove();
+                    numKeys--;
+                    return temp.getValue();
+                }
+            }
+        }
+        return null;
     }
 
     // throws UnsupportedOperationException
@@ -261,11 +332,17 @@ public class HashTableChain<K, V> implements Map<K, V>  {
         Arrays.fill(table,null);//sets all index to null
     }
 
+    @FunctionalInterface
+    interface KeysInter<K,V>{
+        void keyIter(LinkedList<Entry<K,V>>list);
+    }
     // returns a view of the keys in set view
     @Override
     public Set<K> keySet() {
-    	// FILL HERE
-        //@TODO Finish Key set
+        Set<K> keys = new HashSet<>();
+        KeysInter<K,V> func = (LinkedList<Entry<K,V>> list) -> list.forEach(obj-> keys.add(obj.getKey()));
+        Arrays.stream(table).forEach(func::keyIter);
+        return keys;
     }
 
     // throws UnsupportedOperationException
@@ -285,11 +362,13 @@ public class HashTableChain<K, V> implements Map<K, V>  {
     public boolean equals(Object o) {
     	// FILL HERE
         //Fill in map version of equals
+        //@TODO
     }
 
     @Override
     public int hashCode() {
     	//FILL HERE
         //fill in map version of this function
+        //@TODO
     }
 }
