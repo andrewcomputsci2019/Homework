@@ -1,7 +1,6 @@
 package edu.miracosta.cs113;
 import java.util.*;
 import java.util.function.Predicate;
-import java.util.stream.Stream;
 
 /**
  * HashTable implementation using chaining to tack a pair of key and value pairs.
@@ -284,9 +283,9 @@ public class HashTableChain<K, V> implements Map<K, V>  {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder() ;
-        for (int i = 0; i < table.length; i++ ) {
-            if (table[i] != null) {
-                for (Entry<K, V> nextItem : table[i]) {
+        for (LinkedList<Entry<K, V>> list : table) {
+            if (list != null) {
+                for (Entry<K, V> nextItem : list) {
                     sb.append(nextItem.toString()).append(" ");
                 }
                 sb.append(" ");
@@ -300,16 +299,16 @@ public class HashTableChain<K, V> implements Map<K, V>  {
     @Override
     public V remove(Object key) {
         if(containsKey(key)){
-            int hashindex;
+            int hashIndex;
             if(key ==null){
-                hashindex=0;
+                hashIndex =0;
             }else {
-                hashindex = key.hashCode() % table.length;
+                hashIndex = key.hashCode() % table.length;
             }
             Predicate<Entry<K,V>> findKey = key==null?Kv-> Kv.getKey()==null:Kv-> Kv.getKey().equals(key);
-            Iterator<Entry<K,V>> iterator = table[hashindex].iterator();
+            Iterator<Entry<K,V>> iterator = table[hashIndex].iterator();
             while(iterator.hasNext()) {
-                Entry<K,V> temp = null;
+                Entry<K,V> temp;
                 if(findKey.test((temp=iterator.next()))){
                     iterator.remove();
                     numKeys--;
