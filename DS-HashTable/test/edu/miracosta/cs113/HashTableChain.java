@@ -1,5 +1,6 @@
 package edu.miracosta.cs113;
 import java.util.*;
+import java.util.stream.Stream;
 
 /**
  * HashTable implementation using chaining to tack a pair of key and value pairs.
@@ -122,11 +123,12 @@ public class HashTableChain<K, V> implements Map<K, V>  {
                 if(table[index]!=null){ // if the index points to a defined LinkedList grabs its iterator
                     iter = table[index].iterator();
                     if(iter.hasNext()){//verify that the iterator has a next item
-                           lastItemReturned = iter.next();//return item found in the iterator
-                           return lastItemReturned;
+                       lastItemReturned = iter.next();//return item found in the iterator
+                       return lastItemReturned;
                     }
                 }
-                index++; // advance index if either index points to a null item, or if the defined LinkedList is empty
+                iter=null;index++; // advance index if either index points to a null item, or if the defined LinkedList is empty Also set iter to null
+
             }
             throw new NoSuchElementException("No element exist in map"); // out of indexes
         }
@@ -147,7 +149,7 @@ public class HashTableChain<K, V> implements Map<K, V>  {
      * Default constructor, sets the table to initial capacity size
      */
     public HashTableChain() {
-        table = (LinkedList<Entry<K, V>>[]) new LinkedList[DEFAULT_CAPACITY];
+        table = new LinkedList[DEFAULT_CAPACITY];
     }
 
     // returns number of keys
@@ -166,25 +168,53 @@ public class HashTableChain<K, V> implements Map<K, V>  {
     @Override
     public boolean containsKey(Object key) {
     	// Fill Here
+        //@TODO finish here
     }
 
     // returns boolean if table has the searched for value
     @Override
     public boolean containsValue(Object value) {
     	// FILL HERE
-    	
+        //@TODO finish here
     }
 
     // returns Value if table has the searched for key
     @Override
     public V get(Object key) {
     	// FILL HERE
+        //@TODO finish here
     }
 
     // adds the key and value pair to the table using hashing
     @Override
     public V put(K key, V value) {
-    	// FILL HERE
+        int hashIndex = key.hashCode()%table.length;
+        V valTemp = null;
+        if(table[hashIndex]==null){
+            table[hashIndex] = new LinkedList<>();
+            table[hashIndex].add(new Entry<>(key, value));
+        }else{
+            //wanted to use a more modern approach to this instead of using a for loop
+            LinkedList<Entry<K,V>> temp = table[hashIndex];
+            Optional<Entry<K, V>> optional =  temp.stream().filter(obj-> obj.getKey().equals(key)).findFirst();
+            if(optional.isPresent()){
+                valTemp = optional.get().getValue();
+                optional.get().setValue(value);
+            }else{
+                temp.add(new Entry<>(key, value));
+            }
+            /*for(Entry<K,V> map : temp){
+                if(map.getKey().equals(key)){
+                    valTemp = map.value;
+                    map.setValue(value);
+                }
+            }
+            temp.add(new Entry<>(key, value));*/
+        }
+        if((++numKeys/(double)table.length)>LOAD_THRESHOLD){
+            rehash();
+        }
+        return valTemp;
     }
 
 
@@ -193,6 +223,7 @@ public class HashTableChain<K, V> implements Map<K, V>  {
      */
     private void rehash() {
     	// FILL HERE
+        //@TODO last thing to do
     }
 
     @Override
@@ -215,7 +246,7 @@ public class HashTableChain<K, V> implements Map<K, V>  {
     @Override
     public V remove(Object key) {
     	// FILL HERE
-
+        //@TODO finish this function
     }
 
     // throws UnsupportedOperationException
@@ -227,14 +258,14 @@ public class HashTableChain<K, V> implements Map<K, V>  {
     // empties the table
     @Override
     public void clear() {
-    	// Fill HERE
-        Arrays.fill(table,null);
+        Arrays.fill(table,null);//sets all index to null
     }
 
     // returns a view of the keys in set view
     @Override
     public Set<K> keySet() {
     	// FILL HERE
+        //@TODO Finish Key set
     }
 
     // throws UnsupportedOperationException
@@ -247,19 +278,18 @@ public class HashTableChain<K, V> implements Map<K, V>  {
     // returns a set view of the hash table
     @Override
     public Set<Map.Entry<K, V>> entrySet() {
-    	// FILL HERE
         return new EntrySet();
     }
 
     @Override
     public boolean equals(Object o) {
     	// FILL HERE
-
+        //Fill in map version of equals
     }
 
     @Override
     public int hashCode() {
     	//FILL HERE
-
+        //fill in map version of this function
     }
 }
