@@ -8,7 +8,6 @@ import java.util.function.Predicate;
  * @param <V> Generic Value
  */
 public class HashTableChain<K, V> implements Map<K, V>  {
-
     private LinkedList<Entry<K, V>>[] table;
     private  int numKeys;
     /*
@@ -278,6 +277,28 @@ public class HashTableChain<K, V> implements Map<K, V>  {
     private void rehash() {
     	// FILL HERE
         //@TODO last thing to do
+        //first make a new array
+        LinkedList<Entry<K,V>>[] temp = new LinkedList[(2* table.length+1)];
+        for(LinkedList<Entry<K,V>> entries:table){
+            if(entries!=null){
+                for(Entry<K,V> entry:entries){
+                    if(entry.getKey()==null){
+                        if(temp[0]==null){
+                            temp[0] = new LinkedList<>();
+                        }
+                        temp[0].add(entry);
+                    }
+                    else{
+                        int hashIndex = entry.getKey().hashCode()% temp.length;
+                        if(temp[hashIndex]==null){
+                            temp[hashIndex] = new LinkedList<>();
+                        }
+                        temp[hashIndex].add(entry);
+                    }
+                }
+            }
+        }
+        table = temp;
     }
 
     @Override
@@ -339,7 +360,11 @@ public class HashTableChain<K, V> implements Map<K, V>  {
     @Override
     public Set<K> keySet() {
         Set<K> keys = new HashSet<>();
-        KeysInter<K,V> func = (LinkedList<Entry<K,V>> list) -> list.forEach(obj-> keys.add(obj.getKey()));
+        KeysInter<K,V> func = (LinkedList<Entry<K,V>> list) -> {
+          if(list!=null){
+              list.forEach(obj-> keys.add(obj.getKey()));
+          }
+        };
         Arrays.stream(table).forEach(func::keyIter);
         return keys;
     }
