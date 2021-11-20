@@ -160,7 +160,7 @@ public class HashTableChain<K, V> implements Map<K, V>  {
     // returns boolean if table has no keys
     @Override
     public boolean isEmpty() {
-        return numKeys>0;
+        return numKeys==0;
     }
 
     // returns boolean if table has the searched for key
@@ -198,7 +198,7 @@ public class HashTableChain<K, V> implements Map<K, V>  {
         if(key==null){
             return getNull();
         }
-        int hashIndex = key.hashCode()%table.length;
+        int hashIndex = key.hashCode()%table.length;// check if value is negative if so you need to add the table length to it @TODO
         LinkedList<Entry<K,V>> temp = table[hashIndex];
         if(temp!=null && !temp.isEmpty()){
             return temp.stream().filter(obj-> obj.getKey().equals(key)).map(Entry::getValue).findFirst().orElse(null);
@@ -350,6 +350,7 @@ public class HashTableChain<K, V> implements Map<K, V>  {
     @Override
     public void clear() {
         Arrays.fill(table,null);//sets all index to null
+        numKeys=0;
     }
 
     @FunctionalInterface
@@ -387,6 +388,7 @@ public class HashTableChain<K, V> implements Map<K, V>  {
     	// FILL HERE
         //Fill in map version of equals
         //@TODO
+        return true;
     }
 
     @Override
@@ -394,5 +396,6 @@ public class HashTableChain<K, V> implements Map<K, V>  {
     	//FILL HERE
         //fill in map version of this function
         //@TODO
+        return 0;
     }
 }
