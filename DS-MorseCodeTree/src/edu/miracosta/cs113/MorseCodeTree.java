@@ -8,6 +8,8 @@ package edu.miracosta.cs113;
  */
 public class MorseCodeTree extends BinaryTree<Character> {
 
+
+
     // TODO:
     // Build this class, which includes the parent BinaryTree implementation in addition to
     // the `translateFromMorseCode` and `readMorseCodeTree` methods. Documentation has been suggested for the former,
@@ -29,5 +31,4 @@ public class MorseCodeTree extends BinaryTree<Character> {
     public String translateFromMorseCode(String morseCode) {
         return "";
     }
-
 } // End of class MorseCodeTree
