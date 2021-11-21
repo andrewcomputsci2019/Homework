@@ -3,14 +3,10 @@ package edu.miracosta.cs113;
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-
-import java.util.HashSet;
 import java.util.Hashtable;
 import java.util.Map;
-import java.util.Set;
+
+import static org.junit.Assert.*;
 
 /**
  * HashTableChainTest : Tester class for a hash table implementation which utilizes chaining. As a class which extends
@@ -181,7 +177,6 @@ public class HashTableChainTest {
 
         Map<String, Integer> other = new Hashtable<String, Integer>();
         other.put("one", 1);
-
         assertEquals(other.hashCode(), hashTable.hashCode());
     }
 
