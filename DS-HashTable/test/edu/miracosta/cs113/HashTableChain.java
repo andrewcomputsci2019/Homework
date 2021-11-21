@@ -211,7 +211,7 @@ public class HashTableChain<K, V> implements Map<K, V>  {
         if(key==null){
             return getNull();
         }
-        int hashIndex = getHashIndex(key);// check if value is negative if so you need to add the table length to it @TODO
+        int hashIndex = getHashIndex(key);
         LinkedList<Entry<K,V>> temp = table[hashIndex];
         if(temp!=null && !temp.isEmpty()){
             return temp.stream().filter(obj-> obj.getKey().equals(key)).map(Entry::getValue).findFirst().orElse(null);
@@ -290,9 +290,6 @@ public class HashTableChain<K, V> implements Map<K, V>  {
      * Resizes the table to be 2X +1 bigger than previous
      */
     private void rehash() {
-    	// FILL HERE
-        //@TODO last thing to do
-        //first make a new array
         LinkedList<Entry<K,V>>[] temp = new LinkedList[(2*table.length+1)];
         for(LinkedList<Entry<K,V>> entries:table){
             if(entries!=null){
