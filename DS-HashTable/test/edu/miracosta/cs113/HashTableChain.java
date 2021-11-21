@@ -67,6 +67,18 @@ public class HashTableChain<K, V> implements Map<K, V>  {
             return  key + "=" + value  ;
         }
 
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
+            Entry<?, ?> entry = (Entry<?, ?>) o;
+            return Objects.equals(key, entry.key) && Objects.equals(value, entry.value);
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hashCode(key) ^ Objects.hashCode(value); // taken from java hashMap as it seems to be uniform to all Maps
+        }
     }
 
     ////////////// end Entry Class /////////////////////////////////
@@ -99,14 +111,14 @@ public class HashTableChain<K, V> implements Map<K, V>  {
      * and lastItemReturned is entry
      */
     private class SetIterator implements Iterator<Map.Entry<K, V>> {
-
         private int index = 0;
+        private int keys = 0;
         private Entry<K,V> lastItemReturned = null;
         private Iterator<Entry<K, V>> iter = null; // used to iterate the linkedList
 
         @Override
         public boolean hasNext() {
-            return index<table.length;
+            return index<table.length && keys<numKeys;
         }
 
         @Override
@@ -114,6 +126,7 @@ public class HashTableChain<K, V> implements Map<K, V>  {
             if(this.iter!=null){ // if an iter is declared to exist
                 if(iter.hasNext()){//verify that it contains an item
                     lastItemReturned = iter.next(); // assign lastItemReturn and return it
+                    keys++;
                     return lastItemReturned;
                 }iter = null;//if iter does not contain an item, set it to null and advance to next index
                 index++;
@@ -123,11 +136,11 @@ public class HashTableChain<K, V> implements Map<K, V>  {
                     iter = table[index].iterator();
                     if(iter.hasNext()){//verify that the iterator has a next item
                        lastItemReturned = iter.next();//return item found in the iterator
+                        keys++;
                        return lastItemReturned;
                     }
                 }
                 iter=null;index++; // advance index if either index points to a null item, or if the defined LinkedList is empty Also set iter to null
-
             }
             throw new NoSuchElementException("No element exist in map"); // out of indexes
         }
@@ -169,7 +182,7 @@ public class HashTableChain<K, V> implements Map<K, V>  {
         if(key==null){
             return table[0].stream().anyMatch(obj-> obj.getKey()==null);
         }
-        int hashIndex = key.hashCode()% table.length;
+        int hashIndex = getHashIndex(key);
         if(table[hashIndex]!=null){
             return table[hashIndex].stream().anyMatch(obj-> obj.getKey().equals(key));
         }
@@ -198,7 +211,7 @@ public class HashTableChain<K, V> implements Map<K, V>  {
         if(key==null){
             return getNull();
         }
-        int hashIndex = key.hashCode()%table.length;// check if value is negative if so you need to add the table length to it @TODO
+        int hashIndex = getHashIndex(key);// check if value is negative if so you need to add the table length to it @TODO
         LinkedList<Entry<K,V>> temp = table[hashIndex];
         if(temp!=null && !temp.isEmpty()){
             return temp.stream().filter(obj-> obj.getKey().equals(key)).map(Entry::getValue).findFirst().orElse(null);
@@ -220,7 +233,7 @@ public class HashTableChain<K, V> implements Map<K, V>  {
         if(key==null){
             return putNull(value);
         }
-        int hashIndex = key.hashCode()%table.length;
+        int hashIndex = getHashIndex(key);
         V valTemp = null;
         if(table[hashIndex]==null){
             table[hashIndex] = new LinkedList<>();
@@ -232,6 +245,7 @@ public class HashTableChain<K, V> implements Map<K, V>  {
             if(optional.isPresent()){
                 valTemp = optional.get().getValue();
                 optional.get().setValue(value);
+                return valTemp;
             }else{
                 temp.add(new Entry<>(key, value));
             }
@@ -245,7 +259,7 @@ public class HashTableChain<K, V> implements Map<K, V>  {
         }
         numKeys++;
         checkForRehash();
-        return valTemp;
+        return null;
     }
     private V putNull(V value){
         V temp = null;
@@ -258,12 +272,13 @@ public class HashTableChain<K, V> implements Map<K, V>  {
             if(optional.isPresent()){
                 temp = optional.get().getValue();
                 optional.get().setValue(value);
+                return temp;
             }
             table[0].add(new Entry<>(null,value));
         }
         numKeys++;
         checkForRehash();
-        return temp;
+        return null;
     }
 
     private void checkForRehash(){
@@ -278,7 +293,7 @@ public class HashTableChain<K, V> implements Map<K, V>  {
     	// FILL HERE
         //@TODO last thing to do
         //first make a new array
-        LinkedList<Entry<K,V>>[] temp = new LinkedList[(2* table.length+1)];
+        LinkedList<Entry<K,V>>[] temp = new LinkedList[(2*table.length+1)];
         for(LinkedList<Entry<K,V>> entries:table){
             if(entries!=null){
                 for(Entry<K,V> entry:entries){
@@ -289,7 +304,7 @@ public class HashTableChain<K, V> implements Map<K, V>  {
                         temp[0].add(entry);
                     }
                     else{
-                        int hashIndex = entry.getKey().hashCode()% temp.length;
+                        int hashIndex = getHashIndex(entry.getKey(),temp);
                         if(temp[hashIndex]==null){
                             temp[hashIndex] = new LinkedList<>();
                         }
@@ -324,7 +339,7 @@ public class HashTableChain<K, V> implements Map<K, V>  {
             if(key ==null){
                 hashIndex =0;
             }else {
-                hashIndex = key.hashCode() % table.length;
+                hashIndex = getHashIndex(key);
             }
             Predicate<Entry<K,V>> findKey = key==null?Kv-> Kv.getKey()==null:Kv-> Kv.getKey().equals(key);
             Iterator<Entry<K,V>> iterator = table[hashIndex].iterator();
@@ -385,17 +400,39 @@ public class HashTableChain<K, V> implements Map<K, V>  {
 
     @Override
     public boolean equals(Object o) {
-    	// FILL HERE
-        //Fill in map version of equals
-        //@TODO
-        return true;
+        if(o instanceof Map){
+            Map<?,?> temp = (Map<?, ?>) o;
+            Set<? extends Map.Entry<?, ?>> tempSet = temp.entrySet();
+            return tempSet.containsAll(entrySet());
+        }
+        return false;
     }
 
     @Override
     public int hashCode() {
     	//FILL HERE
         //fill in map version of this function
-        //@TODO
-        return 0;
+        int sum =0;
+        for (Map.Entry<K, V> entry : entrySet()) {
+            sum+= entry.hashCode();
+        }
+        return sum;
     }
+    private int getHashIndex(Object key){
+        if(key == null){
+            return 0;
+        }else{
+            int temp = key.hashCode()%table.length;
+            return temp<0?temp+table.length:temp;
+        }
+    }
+    private int getHashIndex(Object key,Object[] array){
+        if(key == null){
+            return 0;
+        }else{
+            int temp = key.hashCode()%array.length;
+            return temp<0?temp+ array.length:temp;
+        }
+    }
+
 }
