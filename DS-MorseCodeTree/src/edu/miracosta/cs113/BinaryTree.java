@@ -116,9 +116,7 @@ public class BinaryTree<T>  {
         }
     }
     public void setValue(T value){
-        if(value!=null) {
-            root = new Node<>(value);
-            empty = false;
-        }
+        root = new Node<>(value);
+        empty=false;
     }
 }
