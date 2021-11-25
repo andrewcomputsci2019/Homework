@@ -39,15 +39,50 @@ public class MorseCodeTree extends BinaryTree<Character> {
      * @param morseCode The given input representing letters in Morse code
      * @return a String representing the decoded values from morseCode
      */
-    public String translateFromMorseCode(String morseCode) {
+    public String translateFromMorseCode(String morseCode) throws Exception {
         StringBuilder builder = new StringBuilder();
         String[] codes = morseCode.split(" ");
         for(String code: codes){
             //do things
+            builder.append(findNode(code.toCharArray()));
         }
-        return "";
+        return builder.toString().replaceAll("[|]","");
     }
-
+    private Character findNode(char[] code) throws Exception {
+        BinaryTree<Character> tree = this;
+        for(int i=0; i<code.length-1;i++){
+            if(code[i]=='*'){
+                if(tree.getLeftSubtree()==null){
+                    throw new Exception("code is invalid");
+                }
+                tree = tree.getLeftSubtree();
+            }
+            else if (code[i] == '-') {
+                if(tree.getRightSubtree()==null){
+                    throw new Exception("code is invalid");
+                }
+                tree = tree.getRightSubtree();
+            }else{
+                throw new Exception("invalid character");
+            }
+        }
+        if (code[code.length - 1] == '*') {
+            if(tree.getLeftSubtree()==null){
+                throw new Exception("code is invalid");
+            }else{
+                return tree.getLeftSubtree().getData();
+            }
+        } else if (code[code.length - 1] == '-') {
+            if(tree.getRightSubtree()==null){
+                throw new Exception("code is invalid");
+            }else{
+                return tree.getRightSubtree().getData();
+            }
+        }
+        else{
+            throw new Exception("code is invalid");
+        }
+    }
     private void readMorseCodeTree() throws IOException {
         super.setValue(null);
         BufferedReader reader = new BufferedReader(new FileReader("./src/edu/miracosta/cs113/ToMorseCode.txt"));
