@@ -138,4 +138,23 @@ public class MorseCodeTree extends BinaryTree<Character> {
             throw new IllegalArgumentException("instruction "+instructions[instructions.length-1]+" is invalid should be * or -");
         }
     }
+    public String textToMorse(String text) throws Exception {//a-z
+        StringBuilder builder = new StringBuilder();
+        for(char character: text.replaceAll(" ","").toLowerCase().toCharArray()){
+            try{
+                builder.append(asciLookUp[character-97]).append(" ");
+            }catch (Exception e){
+                throw new Exception("character is not supported: "+character);
+            }
+        }
+        return builder.toString().replaceAll("[|]","");
+    }
+
+    public static void main(String[] args) {
+        try {
+            System.out.println(new MorseCodeTree().textToMorse("this is some text"));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 } // End of class MorseCodeTree
